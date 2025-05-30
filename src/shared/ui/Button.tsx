@@ -1,6 +1,6 @@
 import { ComponentProps } from 'react'
 
-import { Button as ButtonComponent } from '@/components/ui/button'
+import { Button as BaseButton } from '@/shared/ui/base-button'
 
 export interface ButtonProps extends ComponentProps<'button'> {
   // 버튼의 크기 (default, sm, lg, full, icon)
@@ -16,9 +16,9 @@ export function Button({
   ...props
 }: ButtonProps) {
   return (
-    <ButtonComponent variant={variant} size={size} {...props}>
+    <BaseButton variant={variant} size={size} {...props}>
       {children}
-    </ButtonComponent>
+    </BaseButton>
   )
 }
 
@@ -33,13 +33,13 @@ export function ButtonGhost({
   ...props
 }: ButtonGhostProps) {
   return (
-    <ButtonComponent
+    <BaseButton
       className={destructive ? 'text-destructive' : ''}
       size={size}
       variant="ghost"
       {...props}
     >
       {children}
-    </ButtonComponent>
+    </BaseButton>
   )
 }

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/nextjs'
 import { History, Settings } from 'lucide-react'
 
-import type { ButtonGhostProps, ButtonProps } from '@/shared/ui/Button'
-import { Button, ButtonGhost } from '@/shared/ui/Button'
+import type { ButtonGhostProps, ButtonProps } from '@/shared/ui/button'
+import { Button, ButtonGhost } from '@/shared/ui/button'
 
 const meta = {
   title: 'Shared/Button',
