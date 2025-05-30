@@ -87,12 +87,12 @@
   --popover: oklch(1 0 0); /* 팝오버/툴팁 배경 */
   --popover-foreground: oklch(0.141 0.005 285.823);
   --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.723 0.219 149.579); /* 포커스 링 */
+  --ring: oklch(0.8314 0.1522 140.83); /* 포커스 링 */
 
   /* ====== 포인트/상태 ====== */
-  --primary: oklch(0.723 0.219 149.579); /* 연두 */
+  --primary: oklch(0.8314 0.1522 140.83); /* 연두 */
   --primary-foreground: oklch(0.982 0.018 155.826);
-  --primary-hover: oklch(0.65 0.18 149.579);
+  --primary-hover: oklch(0.7146 0.1524 140.83);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
   --destructive: oklch(0.577 0.245 27.325); /* 삭제/위험 */
