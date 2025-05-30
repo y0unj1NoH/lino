@@ -1,8 +1,8 @@
+import { ComponentProps } from 'react'
+
 import { Button as ButtonComponent } from '@/components/ui/button'
 
-export interface ButtonProps {
-  // 버튼의 children
-  children: React.ReactNode
+export interface ButtonProps extends ComponentProps<'button'> {
   // 버튼의 크기 (default, sm, lg, full, icon)
   size?: 'default' | 'sm' | 'lg' | 'full' | 'icon'
   // 버튼의 스타일 (default, outline, muted, semiMuted)
