@@ -1,16 +1,11 @@
 'use client'
 
-import { Grid2X2, List } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
+import { BOTTOM_NAV_ITEMS } from '@/shared/consts/navigation'
 import { cn } from '@/shared/lib/utils'
-
-const navItems = [
-  { href: '/', label: 'Home', icon: <Grid2X2 className="h-6 w-6" /> },
-  { href: '/unsorted', label: 'Unsorted', icon: <List className="h-6 w-6" /> },
-]
 
 export function BottomNavigation() {
   const pathname = usePathname()
@@ -22,7 +17,7 @@ export function BottomNavigation() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 flex justify-around border-t border-border bg-background p-3 dark:border-border dark:bg-background">
-      {navItems.map(({ href, label, icon }) => {
+      {BOTTOM_NAV_ITEMS.map(({ href, label, icon }) => {
         const isActive = clickedTab === href || pathname === href
         return (
           <Link
