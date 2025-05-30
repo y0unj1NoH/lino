@@ -16,12 +16,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   return (
-    <ButtonComponent
-      variant={variant}
-      size={size}
-      aria-label={props.ariaLabel || "Button"}
-      {...props}
-    >
+    <ButtonComponent variant={variant} size={size} {...props}>
       {children}
     </ButtonComponent>
   )
@@ -42,7 +37,6 @@ export function ButtonGhost({
       className={destructive ? 'text-destructive' : ''}
       size={size}
       variant="ghost"
-      aria-label="Button ghost"
       {...props}
     >
       {children}
