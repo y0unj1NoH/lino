@@ -19,7 +19,7 @@ export function Button({
     <ButtonComponent
       variant={variant}
       size={size}
-      aria-label="Button"
+      aria-label={props.ariaLabel || "Button"}
       {...props}
     >
       {children}
