@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs'
 import { ThemeProvider } from 'next-themes'
 
-import { ThemeToggle } from '@/shared/ui/ThemeToggle'
+import { ThemeToggle } from '@/shared/ui/theme-toggle'
 
 const meta = {
   title: 'Shared/ThemeToggle',

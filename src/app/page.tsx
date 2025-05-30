@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { ThemeToggle } from '@/shared/ui/ThemeToggle'
+import { ThemeToggle } from '@/shared/ui/theme-toggle'
 
 export default function Page() {
   return (

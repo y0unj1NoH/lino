@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { Geist, Geist_Mono as GeistMono } from 'next/font/google'
+
+import { BottomNavigation } from '@/shared/ui/bottom-navigation'
 import './globals.css'
 
 const geistSans = Geist({
@@ -35,6 +37,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <BottomNavigation />
         </ThemeProvider>
       </body>
     </html>
