@@ -6,7 +6,7 @@ export interface ButtonProps extends ComponentProps<'button'> {
   // 버튼의 크기 (default, sm, lg, full, icon)
   size?: 'default' | 'sm' | 'lg' | 'full' | 'icon'
   // 버튼의 스타일 (default, outline, muted, semiMuted)
-  variant?: 'default' | 'outline' | 'muted' | 'semiMuted' | 'destructive'
+  variant?: 'default' | 'outline' | 'muted' | 'semiMuted'
 }
 
 export function Button({
