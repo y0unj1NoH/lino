@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/nextjs'
 
+import { AlertDialog } from '@/shared/ui/alert-dialog'
 import { Button } from '@/shared/ui/button'
-import { ConfirmDialog } from '@/shared/ui/confirm-dialog'
 
 const meta = {
-  title: 'Shared/ConfirmDialog',
-  component: ConfirmDialog,
+  title: 'Shared/AlertDialog',
+  component: AlertDialog,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof ConfirmDialog>
+} satisfies Meta<typeof AlertDialog>
 
 export default meta
 type Story = StoryObj<typeof meta>
