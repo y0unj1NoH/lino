@@ -19,7 +19,7 @@ export function SectionHeader({
         className,
       )}
     >
-      <h2 className="text-lg font-bold">{title}</h2>
+      <h1 className="text-lg font-bold">{title}</h1>
       {rightSlot}
     </div>
   )
