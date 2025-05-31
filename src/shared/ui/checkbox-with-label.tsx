@@ -1,5 +1,6 @@
 import { cn } from '@/shared/lib/utils'
 import { Checkbox } from '@/shared/ui/checkbox'
+import { Label } from '@/shared/ui/label'
 
 interface CheckboxWithLabelProps {
   id: string
@@ -31,12 +32,12 @@ export function CheckboxWithLabel({
         aria-checked={checked}
         aria-label={label}
       />
-      <label
+      <Label
         htmlFor={id}
         className={cn(checked && Strikethrough && 'line-through', 'text-sm')}
       >
         {label}
-      </label>
+      </Label>
     </div>
   )
 }
