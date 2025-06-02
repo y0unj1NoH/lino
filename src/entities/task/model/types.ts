@@ -28,7 +28,7 @@ interface TaskState {
   tasks: Task[]
   sortingStatus: SortingStatus
 }
-interface TaskAction {
+interface TaskActions {
   addTask: (content: string, isToday?: boolean) => void
   updateTask: (taskId: string, content: string) => void
   deleteTask: (taskId: string) => void
@@ -40,4 +40,4 @@ interface TaskAction {
   resetUnfinishedTasks: () => void
 }
 
-export type TaskStore = TaskState & TaskAction
+export type TaskStore = TaskState & TaskActions
