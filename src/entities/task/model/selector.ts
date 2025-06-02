@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { useTaskStore } from './slice'
 import { Task, TaskStatus } from './types'
 
@@ -46,10 +48,15 @@ export const useUnsortedTodayTasks = (): Task[] =>
  * @param {TaskStatus} status - 조회할 태스크 상태
  * @returns {Task[]} 오늘 할 일 중 해당 상태에 속하는 태스크 목록
  */
-export const useTodaySortedTasks = (status: TaskStatus): Task[] =>
-  useTaskStore((state) =>
-    state.tasks.filter(
+export const useTodaySortedTasks = (status: TaskStatus): Task[] => {
+  const tasks = useTaskStore((state) => state.tasks)
+
+  return useMemo(() => {
+    return tasks.filter(
       (task) =>
-        task.status === status && isTodayTask(task) && !isUnsorted(task),
-    ),
-  )
+        task.status === status &&
+        task.isToday &&
+        task.status !== TaskStatus.Unassigned,
+    )
+  }, [tasks, status])
+}
