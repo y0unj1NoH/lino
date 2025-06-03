@@ -7,7 +7,7 @@ interface CheckboxWithLabelProps {
   checked?: boolean
   onCheckedChange?: (checked: boolean) => void
   color?: 'primary' | 'secondary' | 'muted'
-  Strikethrough?: boolean
+  strikethrough?: boolean
   className?: string
 }
 
@@ -17,7 +17,7 @@ export function CheckboxWithLabel({
   checked,
   onCheckedChange,
   color = 'primary',
-  Strikethrough = false,
+  strikethrough = false,
   className,
 }: CheckboxWithLabelProps) {
   return (
@@ -33,7 +33,7 @@ export function CheckboxWithLabel({
       />
       <label
         htmlFor={id}
-        className={cn(checked && Strikethrough && 'line-through', 'text-sm')}
+        className={cn(checked && strikethrough && 'line-through', 'text-sm')}
       >
         {label}
       </label>

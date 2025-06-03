@@ -113,3 +113,21 @@ export const DestructiveGhost: Story = {
     children: 'All delete',
   },
 }
+
+/**
+ * 카드 버튼
+ * 카드 버튼은 카드 형태의 버튼입니다.
+ */
+export const Card: Story = {
+  render: (args: ButtonProps) => <Button {...args} />,
+  args: {
+    variant: 'outline',
+    size: 'card',
+    onClick: () => alert('편집'),
+    children: (
+      <span className="flex-1 break-words whitespace-pre-wrap">
+        빨래 다하기 제발
+      </span>
+    ),
+  },
+}

@@ -44,6 +44,6 @@ export const Strikethrough: Story = {
     label: '취소선 체크박스',
     color: 'secondary',
     checked: true,
-    Strikethrough: true,
+    strikethrough: true,
   },
 }

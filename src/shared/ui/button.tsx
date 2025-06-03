@@ -4,7 +4,7 @@ import { Button as BaseButton } from '@/shared/ui/base-button'
 
 export interface ButtonProps extends ComponentProps<'button'> {
   // 버튼의 크기 (default, sm, lg, full, icon)
-  size?: 'default' | 'sm' | 'lg' | 'full' | 'icon'
+  size?: 'default' | 'sm' | 'lg' | 'full' | 'icon' | 'iconSm' | 'card'
   // 버튼의 스타일 (default, outline, muted, semiMuted)
   variant?: 'default' | 'outline' | 'muted' | 'semiMuted'
 }
