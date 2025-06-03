@@ -55,33 +55,38 @@ export const AddTaskForm = ({ isTodayActive }: AddTaskFormProps) => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
-        {isTodayActive && (
-          <Controller
-            control={control}
-            name="isToday"
-            render={({ field }) => (
-              <CheckboxWithLabel
-                id="isToday"
-                label="오늘 해야할 일"
-                checked={field.value as boolean}
-                onCheckedChange={field.onChange as (checked: boolean) => void}
-              />
-            )}
-          />
-        )}
-        <div className="flex w-full max-w-sm items-center gap-2">
-          <Controller
-            control={control}
-            name="content"
-            render={({ field }) => (
-              <div className="flex flex-col gap-1 flex-1">
+        <div className="w-full flex justify-between items-end  gap-2">
+          <div className="flex flex-col gap-1">
+            <div className="flex justify-between items-center">
+              {isTodayActive && (
+                <Controller
+                  control={control}
+                  name="isToday"
+                  render={({ field }) => (
+                    <CheckboxWithLabel
+                      id="isToday"
+                      label="오늘 해야할 일"
+                      checked={field.value as boolean}
+                      onCheckedChange={
+                        field.onChange as (checked: boolean) => void
+                      }
+                      className="text-xs"
+                    />
+                  )}
+                />
+              )}
+              <p className="flex-1 text-xs text-muted-foreground text-right">
+                {currentContentLength}/20
+              </p>
+            </div>
+            <Controller
+              control={control}
+              name="content"
+              render={({ field }) => (
                 <Input {...field} placeholder="Add a task..." maxLength={20} />
-                <p className="text-xs text-muted-foreground text-right">
-                  {currentContentLength}/20
-                </p>
-              </div>
-            )}
-          />
+              )}
+            />
+          </div>
           <Button type="submit" disabled={isSubmitting}>
             Add
           </Button>

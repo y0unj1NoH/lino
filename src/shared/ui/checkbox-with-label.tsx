@@ -33,7 +33,11 @@ export function CheckboxWithLabel({
       />
       <label
         htmlFor={id}
-        className={cn(checked && strikethrough && 'line-through', 'text-sm')}
+        className={cn(
+          checked && strikethrough && 'line-through',
+          'text-sm',
+          className,
+        )}
       >
         {label}
       </label>
