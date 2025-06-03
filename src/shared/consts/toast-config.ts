@@ -21,6 +21,10 @@ export const EDIT_TOAST = {
     type: 'success',
     duration: 2000,
   },
+  noChanges: {
+    message: '변경된 내용이 없어요.',
+    type: 'warning',
+  },
   failure: {
     message: '할 일을 수정하는 데 실패했어요. 다시 시도해주세요.',
     type: 'error',
