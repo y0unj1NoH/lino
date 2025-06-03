@@ -27,7 +27,7 @@ export const TaskCheckItems = ({ status }: TaskCheckItemsProps) => {
               completeTask(task.id)
             }
           }}
-          Strikethrough
+          strikethrough
         />
       ))}
     </div>
