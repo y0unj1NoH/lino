@@ -2,14 +2,19 @@ import type { Meta, StoryObj } from '@storybook/nextjs'
 
 import { useTaskStore } from '@/entities/task/model/slice'
 import { AddTaskForm } from '@/features/task/add/ui/add-task-form'
+import { once } from '@/shared/lib/utils'
 import { Toaster } from '@/shared/ui/sonner'
+
+const initializeTaskStoreOnce = once(() => {
+  useTaskStore.setState({ tasks: [] })
+})
 
 const meta: Meta<typeof AddTaskForm> = {
   title: 'Features/Task/AddTaskForm',
   component: AddTaskForm,
   decorators: [
     (Story) => {
-      useTaskStore.setState({ tasks: [] })
+      initializeTaskStoreOnce()
       return (
         <>
           <Story />
