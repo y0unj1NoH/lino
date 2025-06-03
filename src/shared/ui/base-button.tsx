@@ -31,6 +31,8 @@ const buttonVariants = cva(
         lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
         full: 'h-12 w-[80%] text-lg rounded-lg sm:max-w-[500px]',
         icon: 'size-9',
+        iconSm: 'size-5',
+        card: 'w-64 flex items-center justify-between gap-2 p-2 rounded-md text-sm font-medium text-left',
       },
     },
     defaultVariants: {
