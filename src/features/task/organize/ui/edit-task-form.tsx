@@ -17,10 +17,17 @@ type EditFromValues = z.infer<typeof EditTaskFormSchema>
 
 interface EditTaskFormProps {
   id: string
-  intialContent: string
+  initialContent: string
+  onDirtyChange?: (isDirty: boolean) => void
+  onSubmitSuccess?: () => void
 }
 
-export const EditTaskForm = ({ id, intialContent }: EditTaskFormProps) => {
+export const EditTaskForm = ({
+  id,
+  initialContent,
+  onDirtyChange,
+  onSubmitSuccess,
+}: EditTaskFormProps) => {
   const updateTask = useTaskStore((state) => state.updateTask)
   const {
     control,
@@ -32,14 +39,18 @@ export const EditTaskForm = ({ id, intialContent }: EditTaskFormProps) => {
     mode: 'onSubmit',
     resolver: zodResolver(EditTaskFormSchema),
     defaultValues: {
-      content: intialContent,
+      content: initialContent,
     },
   })
   const currentContentLength = watch('content').length
 
   useEffect(() => {
-    reset({ content: intialContent })
-  }, [intialContent, reset])
+    reset({ content: initialContent })
+  }, [initialContent, reset])
+
+  useEffect(() => {
+    onDirtyChange?.(isDirty)
+  }, [isDirty, onDirtyChange])
 
   const onSubmit = (data: EditFromValues) => {
     if (!isDirty) {
@@ -50,6 +61,7 @@ export const EditTaskForm = ({ id, intialContent }: EditTaskFormProps) => {
     updateTask(id, content)
     reset({ content })
     showToast(EDIT_TOAST.success)
+    onSubmitSuccess?.()
   }
 
   const onError = (errors: FieldErrors<EditFromValues>) => {
@@ -63,15 +75,20 @@ export const EditTaskForm = ({ id, intialContent }: EditTaskFormProps) => {
     <>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <div className="w-full flex justify-between items-end  gap-2">
-          <div className="flex flex-col gap-1">
+          <div className="w-full flex flex-col gap-1">
             <p className="flex-1 text-xs text-muted-foreground text-right">
-              {currentContentLength}/20
+              {currentContentLength}/40
             </p>
             <Controller
               control={control}
               name="content"
               render={({ field }) => (
-                <Input {...field} placeholder={intialContent} maxLength={20} />
+                <Input
+                  {...field}
+                  placeholder={initialContent}
+                  maxLength={40}
+                  className="w-full"
+                />
               )}
             />
           </div>
