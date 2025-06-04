@@ -65,7 +65,10 @@ function DrawerContent({
         )}
         {...props}
       >
-        <div className="bg-muted mx-auto mt-4 hidden h-2 w-[100px] shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block mb-2" />
+        {
+          // TODO: 취소 시 내려가다가 올라오는 애니매이션 안되는거 해결 or 삭제
+          /* <div className="bg-muted mx-auto mt-4 hidden h-2 w-[100px] shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block mb-2" /> */
+        }
         {children}
       </DrawerPrimitive.Content>
     </DrawerPortal>
