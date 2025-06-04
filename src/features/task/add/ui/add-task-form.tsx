@@ -12,6 +12,7 @@ import { showToast } from '@/shared/lib/toast'
 import { Button } from '@/shared/ui/button'
 import { CheckboxWithLabel } from '@/shared/ui/checkbox-with-label'
 import { Input } from '@/shared/ui/input'
+import { CONTENT_MAX_LENGTH } from '@/shared/consts/form'
 
 type AddFromValues = z.infer<typeof AddTaskFormSchema>
 
@@ -56,7 +57,7 @@ export const AddTaskForm = ({ isTodayActive }: AddTaskFormProps) => {
     <>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
         <div className="w-full flex justify-between items-end  gap-2">
-          <div className="flex flex-col gap-1">
+          <div className="w-full flex flex-col gap-1">
             <div className="flex justify-between items-center">
               {isTodayActive && (
                 <Controller
@@ -83,7 +84,12 @@ export const AddTaskForm = ({ isTodayActive }: AddTaskFormProps) => {
               control={control}
               name="content"
               render={({ field }) => (
-                <Input {...field} placeholder="Add a task..." maxLength={20} />
+                <Input
+                  {...field}
+                  placeholder="Add a task..."
+                  maxLength={CONTENT_MAX_LENGTH}
+                  className="w-full"
+                />
               )}
             />
           </div>

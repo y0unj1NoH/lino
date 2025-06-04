@@ -1,3 +1,5 @@
+import { CONTENT_MAX_LENGTH } from '@/shared/consts/form'
+
 export const TOAST_DEFAULT_OPTIONS = {
   position: 'top-center',
   richColors: true,
@@ -37,7 +39,7 @@ export const FORM_TOAST = {
     type: 'warning',
   },
   maxLength: {
-    message: '할 일은 20자 이내로 작성해주세요.',
+    message: `할 일은 ${CONTENT_MAX_LENGTH}자 이내로 작성해주세요.`,
     type: 'warning',
   },
 } as const

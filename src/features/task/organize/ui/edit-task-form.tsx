@@ -8,6 +8,7 @@ import { z } from 'zod'
 
 import { useTaskStore } from '@/entities/task/model/slice'
 import { EditTaskFormSchema } from '@/features/task/lib/schema'
+import { CONTENT_MAX_LENGTH } from '@/shared/consts/form'
 import { EDIT_TOAST, FORM_TOAST } from '@/shared/consts/toast-config'
 import { showToast } from '@/shared/lib/toast'
 import { Button } from '@/shared/ui/button'
@@ -86,7 +87,7 @@ export const EditTaskForm = ({
                 <Input
                   {...field}
                   placeholder={initialContent}
-                  maxLength={40}
+                  maxLength={CONTENT_MAX_LENGTH}
                   className="w-full"
                 />
               )}

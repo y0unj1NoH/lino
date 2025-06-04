@@ -1,10 +1,12 @@
 import { z } from 'zod'
 
+import { CONTENT_MAX_LENGTH } from '@/shared/consts/form'
+
 const TaskContentSchema = z
   .string()
   .trim()
   .min(1, { message: 'required' })
-  .max(20, { message: 'maxLength' })
+  .max(CONTENT_MAX_LENGTH, { message: 'maxLength' })
 
 export const AddTaskFormSchema = z.object({
   content: TaskContentSchema,
