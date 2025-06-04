@@ -20,30 +20,29 @@ interface EditTaskFormProps {
   id: string
   initialContent: string
   onDirtyChange?: (isDirty: boolean) => void
-  onSubmitSuccess?: () => void
+  onSuccess?: () => void
 }
 
 export const EditTaskForm = ({
   id,
   initialContent,
   onDirtyChange,
-  onSubmitSuccess,
+  onSuccess,
 }: EditTaskFormProps) => {
   const updateTask = useTaskStore((state) => state.updateTask)
+
   const {
     control,
     reset,
-    formState: { isDirty, isSubmitting },
-    handleSubmit,
     watch,
+    handleSubmit,
+    formState: { isDirty, isSubmitting },
   } = useForm<EditFromValues>({
-    mode: 'onSubmit',
     resolver: zodResolver(EditTaskFormSchema),
-    defaultValues: {
-      content: initialContent,
-    },
+    defaultValues: { content: initialContent },
   })
-  const currentContentLength = watch('content').length
+
+  const contentValue = watch('content')
 
   useEffect(() => {
     reset({ content: initialContent })
@@ -58,11 +57,11 @@ export const EditTaskForm = ({
       showToast(EDIT_TOAST.noChanges)
       return
     }
-    const { content } = data
-    updateTask(id, content)
-    reset({ content })
+
+    updateTask(id, data.content)
     showToast(EDIT_TOAST.success)
-    onSubmitSuccess?.()
+    reset({ content: data.content }) // dirty 상태 초기화
+    onSuccess?.()
   }
 
   const onError = (errors: FieldErrors<EditFromValues>) => {
@@ -75,10 +74,10 @@ export const EditTaskForm = ({
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit, onError)}>
-        <div className="w-full flex justify-between items-end  gap-2">
+        <div className="w-full flex justify-between items-end gap-2">
           <div className="w-full flex flex-col gap-1">
             <p className="flex-1 text-xs text-muted-foreground text-right">
-              {currentContentLength}/40
+              {contentValue.length}/{CONTENT_MAX_LENGTH}
             </p>
             <Controller
               control={control}
@@ -86,8 +85,8 @@ export const EditTaskForm = ({
               render={({ field }) => (
                 <Input
                   {...field}
-                  placeholder={initialContent}
                   maxLength={CONTENT_MAX_LENGTH}
+                  placeholder={initialContent}
                   className="w-full"
                 />
               )}
