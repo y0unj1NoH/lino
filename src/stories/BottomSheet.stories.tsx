@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs'
 
+import { TaskEditableCard } from '@/entities/task/ui/task-editable-card'
 import { BottomSheet } from '@/shared/ui/bottom-sheet'
 import { Button, ButtonGhost } from '@/shared/ui/button'
 
@@ -42,6 +43,25 @@ export const Default: Story = {
 export const WithoutDescription: Story = {
   args: {
     trigger: <Button variant="outline">메뉴</Button>,
+    children: (
+      <div className="flex flex-col gap-2 w-full">
+        <ButtonGhost>프로필</ButtonGhost>
+        <ButtonGhost>설정</ButtonGhost>
+        <ButtonGhost>로그아웃</ButtonGhost>
+      </div>
+    ),
+  },
+}
+export const EditableCard: Story = {
+  args: {
+    trigger: (
+      <TaskEditableCard
+        id="1"
+        content="프로필"
+        onEdit={() => alert('편집')}
+        onDelete={() => alert('삭제')}
+      />
+    ),
     children: (
       <div className="flex flex-col gap-2 w-full">
         <ButtonGhost>프로필</ButtonGhost>
