@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import { AlertDialog } from '@/shared/ui/alert-dialog'
 import { BottomSheet } from '@/shared/ui/bottom-sheet'
@@ -17,48 +17,51 @@ export function EditTaskContainer({
   onClose,
 }: EditTaskContainerProps) {
   const [isDirty, setIsDirty] = useState(false)
-  const [isAlertOpen, setIsAlertOpen] = useState(false)
-  const isOpen = !!id && !!content
+  const [showAlert, setShowAlert] = useState(false)
+  const isOpen = Boolean(id && content)
+
+  // TODO: beforeunload 기능 확장 고려
+  const handleOpenChange = useCallback(
+    (open: boolean) => {
+      if (!open) {
+        if (isDirty) {
+          setShowAlert(true)
+          return
+        }
+        onClose()
+      }
+    },
+    [isDirty, onClose],
+  )
+
+  const handleConfirmClose = useCallback(() => {
+    setShowAlert(false)
+    onClose()
+  }, [onClose])
 
   return (
     <>
-      <BottomSheet
-        open={isOpen}
-        onOpenChange={(open) => {
-          if (!open) {
-            if (isDirty) {
-              setIsAlertOpen(true)
-              return
-            }
-            onClose()
-          }
-        }}
-      >
+      <BottomSheet open={isOpen} onOpenChange={handleOpenChange}>
         <div className="flex flex-col gap-4 p-4">
           <EditTaskForm
             id={id}
             initialContent={content}
             onDirtyChange={setIsDirty}
-            onSubmitSuccess={onClose}
+            onSuccess={onClose}
           />
         </div>
       </BottomSheet>
 
-      {isAlertOpen && (
-        <AlertDialog
-          title="Unsaved Changes"
-          description="You have unsaved changes. Are you sure you want to close?"
-          confirmText="Continue"
-          cancelText="Cancel"
-          onConfirm={() => {
-            setIsAlertOpen(false)
-            onClose()
-          }}
-          destructive
-          open={isAlertOpen}
-          onOpenChange={setIsAlertOpen}
-        />
-      )}
+      <AlertDialog
+        title="Unsaved Changes"
+        description="You have unsaved changes. Are you sure you want to close?"
+        confirmText="Continue"
+        cancelText="Cancel"
+        destructive
+        open={showAlert}
+        onConfirm={handleConfirmClose}
+        onOpenChange={setShowAlert}
+      />
     </>
   )
 }
