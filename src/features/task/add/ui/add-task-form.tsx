@@ -100,7 +100,7 @@ export const AddTaskForm = ({
                 />
               )}
               <p className="flex-1 text-xs text-muted-foreground text-right">
-                {currentContentLength}/20
+                {currentContentLength}/{CONTENT_MAX_LENGTH}
               </p>
             </div>
             <Controller
