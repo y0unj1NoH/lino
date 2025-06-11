@@ -7,7 +7,11 @@ import { useEffect, useState } from 'react'
 import { BOTTOM_NAV_ITEMS } from '@/shared/consts/navigation'
 import { cn } from '@/shared/lib/utils'
 
-export function BottomNavigation() {
+interface BottomNavigationProps {
+  className?: string
+}
+
+export function BottomNavigation({ className }: BottomNavigationProps) {
   const pathname = usePathname()
   const [clickedTab, setClickedTab] = useState<string>('')
 
@@ -16,7 +20,13 @@ export function BottomNavigation() {
   }, [pathname])
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 flex justify-around border-t border-border bg-background p-3 dark:border-border dark:bg-background">
+    <nav
+      className={cn(
+        'fixed h-16 bottom-0 left-0 right-0 z-60 flex justify-around border-t border-border bg-background p-3 dark:border-border dark:bg-background',
+        // 'transform transition-transform duration-300 ease-in-out',
+        className,
+      )}
+    >
       {BOTTOM_NAV_ITEMS.map(({ href, label, icon }) => {
         const isActive = clickedTab === href || pathname === href
         return (
