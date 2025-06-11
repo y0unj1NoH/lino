@@ -16,8 +16,10 @@ interface AlertDialogProps {
   confirmText?: string
   cancelText?: string
   onConfirm: () => void
-  trigger: React.ReactNode
+  trigger?: React.ReactNode
   destructive?: boolean
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 export function AlertDialog({
@@ -28,10 +30,12 @@ export function AlertDialog({
   onConfirm,
   trigger,
   destructive = false,
+  open,
+  onOpenChange,
 }: AlertDialogProps) {
   return (
-    <BaseAlertDialog>
-      <AlertDialogTrigger>{trigger}</AlertDialogTrigger>
+    <BaseAlertDialog open={open} onOpenChange={onOpenChange}>
+      {trigger && <AlertDialogTrigger>{trigger}</AlertDialogTrigger>}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>

@@ -16,9 +16,11 @@ import {
 
 interface BottomSheetProps {
   children: React.ReactNode
-  trigger: React.ReactNode
+  trigger?: React.ReactNode
   title?: string
   description?: string
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 export function BottomSheet({
@@ -26,12 +28,26 @@ export function BottomSheet({
   trigger,
   title = '',
   description = '',
+  open: openProp,
+  onOpenChange,
 }: BottomSheetProps) {
   const [open, setOpen] = React.useState(false)
+  const isControlled = openProp !== undefined
 
+  const actualOpen = isControlled ? openProp : open
+
+  const handleOpenChange = (state: boolean) => {
+    if (!isControlled) {
+      setOpen(state)
+    }
+    if (onOpenChange) {
+      onOpenChange(state)
+    }
+  }
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>{trigger}</DrawerTrigger>
+    <Drawer open={actualOpen} onOpenChange={handleOpenChange}>
+      {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
+
       <DrawerContent>
         {title && (
           <DrawerHeader className="text-left">
