@@ -1,26 +1,35 @@
+'use client'
+
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect, useRef } from 'react'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { useTaskStore } from '@/entities/task/model/slice'
 import { AddTaskFormSchema } from '@/features/task/lib/schema'
+import { CONTENT_MAX_LENGTH } from '@/shared/consts/form'
 import { ADD_TOAST, FORM_TOAST } from '@/shared/consts/toast-config'
 import { showToast } from '@/shared/lib/toast'
 import { Button } from '@/shared/ui/button'
 import { CheckboxWithLabel } from '@/shared/ui/checkbox-with-label'
 import { Input } from '@/shared/ui/input'
-import { CONTENT_MAX_LENGTH } from '@/shared/consts/form'
 
 type AddFromValues = z.infer<typeof AddTaskFormSchema>
 
 interface AddTaskFormProps {
   isTodayActive: boolean
+  showOverlay?: boolean
+  onFocus?: () => void
 }
 
-export const AddTaskForm = ({ isTodayActive }: AddTaskFormProps) => {
+export const AddTaskForm = ({
+  isTodayActive,
+  showOverlay,
+  onFocus,
+}: AddTaskFormProps) => {
   const addTask = useTaskStore((state) => state.addTask)
   const {
     control,
@@ -37,6 +46,8 @@ export const AddTaskForm = ({ isTodayActive }: AddTaskFormProps) => {
     },
   })
 
+  const inputRef = useRef<HTMLInputElement>(null)
+
   const currentContentLength = watch('content').length
 
   const onSubmit = (data: AddFromValues) => {
@@ -52,6 +63,18 @@ export const AddTaskForm = ({ isTodayActive }: AddTaskFormProps) => {
       showToast(FORM_TOAST[firstError.message as keyof typeof FORM_TOAST])
     }
   }
+
+  useEffect(() => {
+    if (!showOverlay) {
+      reset()
+    }
+  }, [showOverlay, reset])
+
+  useEffect(() => {
+    if (!showOverlay) {
+      inputRef.current?.blur()
+    }
+  }, [showOverlay])
 
   return (
     <>
@@ -89,6 +112,17 @@ export const AddTaskForm = ({ isTodayActive }: AddTaskFormProps) => {
                   placeholder="Add a task..."
                   maxLength={CONTENT_MAX_LENGTH}
                   className="w-full"
+                  onFocus={onFocus}
+                  onBlur={() => {
+                    if (showOverlay) {
+                      inputRef.current?.focus()
+                      // 일부 환경에선 onBlur → focus()가 즉시 호출되면 무시되는 경우가 있어서 아래처럼 살짝 delay를 주기도 해요
+                      // setTimeout(() => {
+                      //   inputRef.current?.focus()
+                      // }, 0)
+                    }
+                  }}
+                  ref={inputRef}
                 />
               )}
             />
