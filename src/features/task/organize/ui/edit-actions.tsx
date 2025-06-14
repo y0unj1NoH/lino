@@ -28,7 +28,7 @@ export function EditActions() {
             )}
             aria-label="delete all tasks"
           >
-            All delete
+            Delete All
           </p>
         }
       />
