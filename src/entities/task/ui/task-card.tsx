@@ -8,7 +8,7 @@ export const TaskCard = ({ id, content, isToday = false }: TaskCardProps) => {
   return (
     <div
       data-id={id}
-      className="w-64 flex items-center justify-between gap-2 p-2 rounded-md border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
+      className="w-full flex items-center justify-between gap-2 p-2 rounded-md border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50"
     >
       <span className="flex-1 break-words whitespace-pre-wrap text-sm">
         {content}

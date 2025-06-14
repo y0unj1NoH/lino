@@ -58,7 +58,7 @@ export function AddTaskContainer() {
       )}
       <div
         className={cn(
-          'fixed left-0 right-0 z-500 border',
+          'fixed left-0 right-0 z-500 border h-22',
           'bg-background rounded-t-lg border-t p-4',
           'transition-[bottom] duration-300 ease-in-out',
         )}

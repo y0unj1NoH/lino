@@ -98,7 +98,12 @@ const Logo = ({ children, className }: BaseProps) => {
  */
 const Date = ({ children, className }: BaseProps) => {
   return (
-    <span className={cn('text-primary text-xs flex items-center', className)}>
+    <span
+      className={cn(
+        'text-primary text-xs font-semibold flex items-center',
+        className,
+      )}
+    >
       {children}
     </span>
   )
