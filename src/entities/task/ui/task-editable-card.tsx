@@ -24,7 +24,9 @@ export const TaskEditableCard = ({
       onClick={onEdit}
       aria-label={`${content} 수정`}
     >
-      <span className="flex-1 break-words whitespace-pre-wrap">{content}</span>
+      <span className="flex-1 break-words whitespace-pre-wrap text-left">
+        {content}
+      </span>
       <ButtonGhost
         size="iconSm"
         destructive
