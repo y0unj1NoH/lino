@@ -47,7 +47,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex flex-col h-dvh">
+          <div>
+            {/* <div className="flex flex-col h-dvh"> */}
             {children}
             {/* // TODO: 뭐가 더 나은지 고민 */}
             <BottomNavigation
