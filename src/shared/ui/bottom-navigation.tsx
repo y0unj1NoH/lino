@@ -19,10 +19,15 @@ export function BottomNavigation({ className }: BottomNavigationProps) {
     setClickedTab('')
   }, [pathname])
 
+  // 바텀 내비게이션이 없는 페이지
+  if (pathname === '/sorting') {
+    return null
+  }
+
   return (
     <nav
       className={cn(
-        'fixed h-16 bottom-0 left-0 right-0 z-60 flex justify-around border-t border-border bg-background p-3 dark:border-border dark:bg-background',
+        'fixed h-16 bottom-0 left-0 right-0 z-50 flex justify-around border-t border-border bg-background p-3 dark:border-border dark:bg-background',
         // 'transform transition-transform duration-300 ease-in-out',
         className,
       )}

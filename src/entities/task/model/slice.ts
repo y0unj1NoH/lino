@@ -65,6 +65,17 @@ export const useTaskStore = create<TaskStore>()(
               'deleteTask',
             ),
 
+          deleteAllTask: () =>
+            set(
+              (state) => ({
+                tasks: state.tasks.filter(
+                  (task) => task.status !== TaskStatus.Unassigned,
+                ),
+              }),
+              false,
+              'deleteAllTask',
+            ),
+
           sortTask: (id, status) =>
             updateTaskById(id, () => ({ status, isToday: true }), 'sortTask'),
 

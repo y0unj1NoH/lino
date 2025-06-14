@@ -32,6 +32,7 @@ interface TaskActions {
   addTask: (content: string, isToday?: boolean) => void
   updateTask: (taskId: string, content: string) => void
   deleteTask: (taskId: string) => void
+  deleteAllTask: () => void
   sortTask: (taskId: string, status: TaskStatus) => void
   postponeTask: (taskId: string) => void
   completeTask: (taskId: string) => void
