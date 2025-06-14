@@ -34,7 +34,9 @@ const Header = ({ children, className }: BaseProps) => {
  */
 const Left = ({ children, className }: BaseProps) => {
   return (
-    <div className={cn('col-start-1 col-end-2 flex items-center', className)}>
+    <div
+      className={cn('col-start-1 col-end-2 flex items-center gap-2', className)}
+    >
       {children}
     </div>
   )
@@ -49,7 +51,7 @@ const Center = ({ children, className }: BaseProps) => {
   return (
     <div
       className={cn(
-        'col-start-2 col-end-3 flex items-center justify-center',
+        'col-start-2 col-end-3 flex items-center justify-center gap-2',
         className,
       )}
     >
@@ -67,7 +69,7 @@ const Right = ({ children, className }: BaseProps) => {
   return (
     <div
       className={cn(
-        'col-start-3 col-end-4 flex items-center justify-end',
+        'col-start-3 col-end-4 flex items-center justify-end gap-2',
         className,
       )}
     >
@@ -128,7 +130,7 @@ const Title = ({ children, className }: BaseProps) => {
 const Actions = ({ children, className }: BaseProps) => {
   return (
     <div
-      className={cn('text-sm font-light flex items-center gap-2', className)}
+      className={cn('text-sm font-light flex items-center gap-1', className)}
     >
       {children}
     </div>
