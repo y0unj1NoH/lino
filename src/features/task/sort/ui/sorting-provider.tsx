@@ -1,6 +1,6 @@
 'use client'
 import { DndContext, DragEndEvent } from '@dnd-kit/core'
-// import { restrictToParentElement } from '@dnd-kit/modifiers'
+import { restrictToParentElement } from '@dnd-kit/modifiers'
 
 import { useTaskStore } from '@/entities/task/model/slice'
 import { TaskStatus } from '@/entities/task/model/types'
@@ -20,10 +20,7 @@ export function SortingProvider({ children }: { children: React.ReactNode }) {
     // 이제 저 DOM은 사라져야해
   }
   return (
-    <DndContext
-      onDragEnd={handleDragEnd}
-      // modifiers={[restrictToParentElement]}
-    >
+    <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToParentElement]}>
       {children}
     </DndContext>
   )

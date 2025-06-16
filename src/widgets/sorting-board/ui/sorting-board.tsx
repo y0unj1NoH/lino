@@ -26,18 +26,15 @@ export function SortingBoard() {
         <DropZone status={TaskStatus.NotUrgentImportant} />
         <DropZone status={TaskStatus.NotUrgentNotImportant} />
       </div>
-      <div className="absolute top-1/2 left-1/2 w-fit h-fit -translate-x-1/2 -translate-y-1/2">
-        {unsortedTasks.map((task, index) => (
-          <SortingTaskCard
-            key={task.id}
-            id={task.id}
-            content={task.content}
-            index={index}
-            // className="absolute -translate-x-1/2 -translate-y-1/2"
-            className="absolute -translate-x-1/2"
-          />
-        ))}
-      </div>
+      {unsortedTasks.map((task, index) => (
+        <SortingTaskCard
+          key={task.id}
+          id={task.id}
+          content={task.content}
+          index={index}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2"
+        />
+      ))}
     </>
   )
 }
