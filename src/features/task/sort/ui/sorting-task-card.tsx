@@ -42,7 +42,7 @@ export const SortingTaskCard = ({
       {...listeners}
       {...attributes}
       className={cn(
-        'w-64 text-center',
+        'w-64 text-center font-semibold',
         !isDragging && 'transition-transform duration-200 ease-in-out',
         index > 4 ? offsets[4] : offsets[index],
         className,
