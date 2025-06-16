@@ -6,7 +6,7 @@ import { TaskStatus } from '@/entities/task/model/types'
 import { cn } from '@/shared/lib/utils'
 
 interface DropZoneProps {
-  status: Exclude<TaskStatus, TaskStatus.Unassigned>
+  status: Exclude<TaskStatus, TaskStatus.Unassigned | TaskStatus.Postponed>
 }
 
 const dropZoneVariants = cva('border-none text-sm font-semibold', {
