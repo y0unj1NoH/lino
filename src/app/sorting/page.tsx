@@ -1,5 +1,6 @@
 'use client'
+import { SortingBoard } from '@/widgets/sorting-board/ui/sorting-board'
 
 export default function SortingPage() {
-  return <h1>SortingPage</h1>
+  return <SortingBoard />
 }
