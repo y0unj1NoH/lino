@@ -4,6 +4,7 @@ export enum TaskStatus {
   UrgentNotImportant = 'urgent-not-important',
   NotUrgentImportant = 'not-urgent-important',
   NotUrgentNotImportant = 'not-urgent-not-important',
+  Postponed = 'postponed',
 }
 
 export interface Task {
@@ -28,6 +29,7 @@ interface TaskState {
   tasks: Task[]
   sortingStatus: SortingStatus
 }
+
 interface TaskActions {
   addTask: (content: string, isToday?: boolean) => void
   updateTask: (taskId: string, content: string) => void
