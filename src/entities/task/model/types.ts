@@ -23,8 +23,13 @@ export interface Task {
   completedAt?: Date
 }
 
-export type SortingStatus = 'UNSORTED' | 'SORTING' | 'SORTED'
-
+export type SortingStatus =
+  | 'UNSORTED' // 분류 전
+  | 'SORTING' // 분류 중
+  | 'SORTED' // 분류 후
+  | 'ADDITIONAL' // 추가 분류 전
+  | 'ADDITIONAL_SORTING' // 추가 분류 중
+  
 interface TaskState {
   tasks: Task[]
   sortingStatus: SortingStatus
