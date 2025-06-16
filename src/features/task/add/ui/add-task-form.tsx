@@ -1,14 +1,12 @@
 'use client'
 
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useRef } from 'react'
 import { Controller, FieldErrors, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { useTaskStore } from '@/entities/task/model/slice'
+import { useAddTask } from '@/features/task/add/model/use-add-task'
 import { AddTaskFormSchema } from '@/features/task/lib/schema'
 import { CONTENT_MAX_LENGTH } from '@/shared/consts/form'
 import { ADD_TOAST, FORM_TOAST } from '@/shared/consts/toast-config'
@@ -30,7 +28,7 @@ export const AddTaskForm = ({
   showOverlay,
   onFocus,
 }: AddTaskFormProps) => {
-  const addTask = useTaskStore((state) => state.addTask)
+  const addTask = useAddTask()
   const {
     control,
     reset,
