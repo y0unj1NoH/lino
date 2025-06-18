@@ -32,7 +32,7 @@ export const useTaskStore = create<TaskStore>()(
 
         return {
           tasks: [],
-          sortingStatus: 'UNSORTED',
+          sortingStatus: undefined,
 
           addTask: (content, isToday = false) =>
             set(

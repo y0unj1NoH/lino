@@ -18,7 +18,7 @@ const Header = ({ children, className }: BaseProps) => {
   return (
     <header
       className={cn(
-        'bg-background/80 fixed top-0 left-0 right-0 z-10 backdrop-blur-sm border-b border shadow-xs h-12 grid grid-cols-3 items-center px-4 py-2 overflow-hidden',
+        'bg-background/80 fixed top-0 left-0 right-0 z-10 backdrop-blur-sm border-b border shadow-xs h-12 grid grid-cols-3 items-center px-4 py-2 overflow-hidden truncate',
         className,
       )}
     >
@@ -116,12 +116,7 @@ const Date = ({ children, className }: BaseProps) => {
  */
 const Title = ({ children, className }: BaseProps) => {
   return (
-    <h1
-      className={cn(
-        'text-md font-semibold flex items-center truncate',
-        className,
-      )}
-    >
+    <h1 className={cn('text-md font-semibold flex items-center', className)}>
       {children}
     </h1>
   )

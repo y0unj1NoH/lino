@@ -21,7 +21,7 @@ export function CheckboxWithLabel({
   className,
 }: CheckboxWithLabelProps) {
   return (
-    <div className="flex items-center space-x-2">
+    <div className="w-full flex items-start space-x-2">
       <Checkbox
         id={id}
         className={className}
@@ -35,7 +35,7 @@ export function CheckboxWithLabel({
         htmlFor={id}
         className={cn(
           checked && strikethrough && 'line-through',
-          'text-sm',
+          'flex-1 min-w-0 text-sm break-words',
           className,
         )}
       >
@@ -43,4 +43,5 @@ export function CheckboxWithLabel({
       </label>
     </div>
   )
+
 }

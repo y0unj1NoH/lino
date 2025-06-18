@@ -1,8 +1,8 @@
 export enum TaskStatus {
   Unassigned = 'unassigned',
   UrgentImportant = 'urgent-important',
-  UrgentNotImportant = 'urgent-not-important',
   NotUrgentImportant = 'not-urgent-important',
+  UrgentNotImportant = 'urgent-not-important',
   NotUrgentNotImportant = 'not-urgent-not-important',
   Postponed = 'postponed',
 }
@@ -37,7 +37,7 @@ export type SortingStatus =
 
 interface TaskState {
   tasks: Task[]
-  sortingStatus: SortingStatus
+  sortingStatus: SortingStatus | undefined
 }
 
 interface TaskActions {
