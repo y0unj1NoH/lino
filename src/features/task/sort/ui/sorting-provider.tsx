@@ -15,9 +15,9 @@ export function SortingProvider({ children }: { children: React.ReactNode }) {
       return
     }
 
-    sortTask(active.id as string, over.id as TaskStatus)
-    // TODO: ative 요소가 사라지는 애니메이션
-    // 이제 저 DOM은 사라져야해
+    setTimeout(() => {
+      sortTask(active.id as string, over.id as TaskStatus)
+    }, 100)
   }
   return (
     <DndContext onDragEnd={handleDragEnd} modifiers={[restrictToParentElement]}>

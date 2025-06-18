@@ -1,6 +1,8 @@
 import { useDraggable } from '@dnd-kit/core'
+import { useEffect, useState } from 'react'
 
 import { TaskCard } from '@/entities/task/ui/task-card'
+import { CARD_DECK_OFFSETS } from '@/features/task/sort/ui/consts'
 import { cn } from '@/shared/lib/utils'
 
 interface SortingTaskCardProps {
@@ -10,6 +12,7 @@ interface SortingTaskCardProps {
   className?: string
 }
 
+// TODO: 책임 분리
 export const SortingTaskCard = ({
   id,
   content,
@@ -22,16 +25,30 @@ export const SortingTaskCard = ({
       disabled: index !== 0,
     })
 
-  const offsets = [
-    'translate-y-[-50%] z-50',
-    'translate-y-[calc(-50%-5px)] z-40',
-    'translate-y-[calc(-50%-10px)] z-30',
-    'translate-y-[calc(-50%-15px)] z-20',
-    'translate-y-[calc(-50%-20px)] z-10',
-  ]
+  const [dragStarted, setDragStarted] = useState(false)
+  const [finalTransform, setFinalTransform] = useState<{
+    x: number
+    y: number
+  } | null>(null)
 
-  const style = transform
-    ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` }
+  useEffect(() => {
+    if (!dragStarted && index === 0 && isDragging) {
+      setDragStarted(true)
+    }
+  }, [isDragging, index])
+
+  useEffect(() => {
+    if (transform) {
+      setFinalTransform({ x: transform.x, y: transform.y })
+    }
+  }, [transform?.x, transform?.y])
+
+  const style = finalTransform
+    ? {
+        transform: `translate3d(${finalTransform.x}px, ${finalTransform.y}px, 0) scale(${
+          dragStarted && !isDragging ? 0 : 1
+        })`,
+      }
     : undefined
 
   return (
@@ -42,9 +59,12 @@ export const SortingTaskCard = ({
       {...listeners}
       {...attributes}
       className={cn(
-        'w-64 text-center font-semibold',
-        !isDragging && 'transition-transform duration-200 ease-in-out',
-        index > 4 ? offsets[4] : offsets[index],
+        'w-64 text-center font-semibold ',
+        index > 4 ? CARD_DECK_OFFSETS[4] : CARD_DECK_OFFSETS[index],
+        !dragStarted && 'transition-transform duration-200 ease-in-out',
+        dragStarted &&
+          !isDragging &&
+          'transition-transform duration-100 ease-in-out',
         className,
       )}
     >
