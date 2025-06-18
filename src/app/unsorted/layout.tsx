@@ -20,7 +20,7 @@ function UnsortedHeader() {
   const setSortingStatus = useTaskStore((state) => state.setSortingStatus)
 
   const handleSortClick = () => {
-    const route = sortingStatus.includes('ADDITIONAL')
+    const route = sortingStatus?.includes('ADDITIONAL')
       ? '/sorting/additional'
       : '/sorting'
 

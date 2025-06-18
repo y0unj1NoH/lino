@@ -37,7 +37,7 @@ export type SortingStatus =
 
 interface TaskState {
   tasks: Task[]
-  sortingStatus: SortingStatus
+  sortingStatus: SortingStatus | undefined
 }
 
 interface TaskActions {
