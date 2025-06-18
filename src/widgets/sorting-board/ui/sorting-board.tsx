@@ -1,5 +1,9 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
+import { useEffect, useRef } from 'react'
+
+import { useTaskStore } from '@/entities/task/model/slice'
 import { Task, TaskStatus } from '@/entities/task/model/types'
 import { DropZone } from '@/features/task/sort/ui/drop-zone'
 import { SortingTaskCard } from '@/features/task/sort/ui/sorting-task-card'
@@ -9,12 +13,26 @@ interface SortingBoardProps {
 }
 
 export function SortingBoard({ tasks }: SortingBoardProps) {
-  // TODO: 끝나면 토스트 or 완료 모달 띄우고 페이지 넘어가기
-  if (tasks.length === 0) {
-    window.location.href = '/'
+  const router = useRouter()
+  const setSortingStatus = useTaskStore((state) => state.setSortingStatus)
+  const hasLoaded = useRef(false)
+
+  useEffect(() => {
+    if (!hasLoaded.current) {
+      hasLoaded.current = true
+      return
+    }
+
+    if (tasks.length === 0) {
+      setSortingStatus('SORTED')
+      router.push('/unsorted')
+    }
+  }, [tasks.length, router, setSortingStatus])
+
+  if (tasks.length === 0 && hasLoaded.current) {
     return (
-      <div className="h-100 bg-primary border-black overflow-x-hidden">
-        완료 구리!
+      <div className="h-full flex justify-center items-center">
+        <p className="text-lg font-semibold">분류가 완료되었어요!</p>
       </div>
     )
   }
