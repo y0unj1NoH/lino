@@ -43,10 +43,13 @@ export const useUnsortedTasks = (): Task[] => {
  * (컴포넌트 내 훅)
  * @returns {Task[]} 오늘 할 일 중 분류되지 않은 태스크 목록
  */
-export const useUnsortedTodayTasks = (): Task[] =>
-  useTaskStore((state) =>
-    state.tasks.filter((task) => isUnsorted(task) && isTodayTask(task)),
-  )
+export const useUnsortedTodayTasks = (): Task[] => {
+  const tasks = useTaskStore((state) => state.tasks)
+
+  return useMemo(() => {
+    return tasks.filter((task) => isUnsorted(task) && isTodayTask(task))
+  }, [tasks])
+}
 
 /**
  * 오늘 날짜이며 특정 상태에 해당하는 분류된 태스크 목록을 구독 및 반환
