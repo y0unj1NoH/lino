@@ -67,7 +67,9 @@ export function AddTaskContainer() {
         }}
       >
         <AddTaskForm
-          isTodayActive={sortingStatus === 'SORTED'}
+          isTodayActive={
+            sortingStatus !== 'UNSORTED' && sortingStatus !== 'SORTING'
+          }
           showOverlay={showOverlay}
           onFocus={handleFocus}
         />

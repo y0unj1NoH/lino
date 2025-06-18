@@ -1,5 +1,6 @@
 'use client'
 
+import { SortingProvider } from '@/features/task/sort/ui/sorting-provider'
 import { Header } from '@/shared/ui/header'
 
 function SortingHeader() {
@@ -23,7 +24,9 @@ export default function SortingLayout({
   return (
     <>
       <SortingHeader />
-      {children}
+      <SortingProvider>
+        <div className="relative h-[calc(100dvh-3rem)] mt-12">{children}</div>
+      </SortingProvider>
     </>
   )
 }

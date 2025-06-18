@@ -4,7 +4,13 @@ export enum TaskStatus {
   UrgentNotImportant = 'urgent-not-important',
   NotUrgentImportant = 'not-urgent-important',
   NotUrgentNotImportant = 'not-urgent-not-important',
+  Postponed = 'postponed',
 }
+
+export type MatrixTaskStatus = Exclude<
+  TaskStatus,
+  TaskStatus.Unassigned | TaskStatus.Postponed
+>
 
 export interface Task {
   // UUID
@@ -22,12 +28,18 @@ export interface Task {
   completedAt?: Date
 }
 
-export type SortingStatus = 'UNSORTED' | 'SORTING' | 'SORTED'
+export type SortingStatus =
+  | 'UNSORTED' // 분류 전
+  | 'SORTING' // 분류 중
+  | 'SORTED' // 분류 후
+  | 'ADDITIONAL' // 추가 분류 전
+  | 'ADDITIONAL_SORTING' // 추가 분류 중
 
 interface TaskState {
   tasks: Task[]
   sortingStatus: SortingStatus
 }
+
 interface TaskActions {
   addTask: (content: string, isToday?: boolean) => void
   updateTask: (taskId: string, content: string) => void

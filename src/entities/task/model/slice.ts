@@ -38,6 +38,7 @@ export const useTaskStore = create<TaskStore>()(
             set(
               (state) => ({
                 tasks: [
+                  ...state.tasks,
                   {
                     id: nanoid(),
                     content,
@@ -46,7 +47,6 @@ export const useTaskStore = create<TaskStore>()(
                     postponedCount: 0,
                     updatedAt: getCurrentDate(),
                   },
-                  ...state.tasks,
                 ],
               }),
               false,
@@ -83,6 +83,7 @@ export const useTaskStore = create<TaskStore>()(
             updateTaskById(
               id,
               (task) => ({
+                status: TaskStatus.Postponed,
                 postponedCount: task.postponedCount + 1,
               }),
               'postponeTask',
@@ -117,14 +118,14 @@ export const useTaskStore = create<TaskStore>()(
 
           resetUnfinishedTasks: () => {
             const now = getCurrentDate()
-
             set(
               (state) => ({
                 sortingStatus: 'UNSORTED',
                 tasks: state.tasks.map((task) => {
                   if (
-                    !task.completedAt &&
-                    task.status !== TaskStatus.Unassigned
+                    (!task.completedAt &&
+                      task.status !== TaskStatus.Unassigned) ||
+                    task.status === TaskStatus.Postponed
                   ) {
                     return {
                       ...task,

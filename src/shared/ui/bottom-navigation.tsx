@@ -20,7 +20,7 @@ export function BottomNavigation({ className }: BottomNavigationProps) {
   }, [pathname])
 
   // 바텀 내비게이션이 없는 페이지
-  if (pathname === '/sorting') {
+  if (pathname === '/sorting' || pathname === '/sorting/additional') {
     return null
   }
 
