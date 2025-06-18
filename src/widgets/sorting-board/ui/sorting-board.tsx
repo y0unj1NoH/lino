@@ -41,8 +41,8 @@ export function SortingBoard({ tasks }: SortingBoardProps) {
     <>
       <div className="border-black grid h-full w-full grid-cols-2 grid-rows-2">
         <DropZone status={TaskStatus.UrgentImportant} />
-        <DropZone status={TaskStatus.UrgentNotImportant} />
         <DropZone status={TaskStatus.NotUrgentImportant} />
+        <DropZone status={TaskStatus.UrgentNotImportant} />
         <DropZone status={TaskStatus.NotUrgentNotImportant} />
       </div>
       {tasks.map((task, index) => (

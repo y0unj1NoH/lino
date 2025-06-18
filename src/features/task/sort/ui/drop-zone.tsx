@@ -15,10 +15,10 @@ const dropZoneVariants = cva(
     variants: {
       status: {
         [TaskStatus.UrgentImportant]: 'bg-quadrant-red text-icon-do',
-        [TaskStatus.UrgentNotImportant]:
-          'bg-quadrant-green text-icon-delegable',
         [TaskStatus.NotUrgentImportant]:
           'bg-quadrant-yellow text-icon-schedule',
+        [TaskStatus.UrgentNotImportant]:
+          'bg-quadrant-green text-icon-delegable',
         [TaskStatus.NotUrgentNotImportant]: 'bg-quadrant-blue text-icon-later',
       },
       isOver: {
