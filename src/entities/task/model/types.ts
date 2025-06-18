@@ -7,6 +7,11 @@ export enum TaskStatus {
   Postponed = 'postponed',
 }
 
+export type MatrixTaskStatus = Exclude<
+  TaskStatus,
+  TaskStatus.Unassigned | TaskStatus.Postponed
+>
+
 export interface Task {
   // UUID
   id: string
@@ -29,7 +34,7 @@ export type SortingStatus =
   | 'SORTED' // 분류 후
   | 'ADDITIONAL' // 추가 분류 전
   | 'ADDITIONAL_SORTING' // 추가 분류 중
-  
+
 interface TaskState {
   tasks: Task[]
   sortingStatus: SortingStatus

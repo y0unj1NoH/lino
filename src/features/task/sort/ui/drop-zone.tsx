@@ -1,73 +1,57 @@
 import { useDroppable } from '@dnd-kit/core'
 import { cva } from 'class-variance-authority'
-import { Clock, Send, Star, Zap } from 'lucide-react'
 
-import { TaskStatus } from '@/entities/task/model/types'
+import { MatrixTaskStatus, TaskStatus } from '@/entities/task/model/types'
+import { MATRIX_CONFIG } from '@/features/task/sort/ui/consts'
 import { cn } from '@/shared/lib/utils'
 
 interface DropZoneProps {
-  status: Exclude<TaskStatus, TaskStatus.Unassigned | TaskStatus.Postponed>
+  status: MatrixTaskStatus
 }
 
-const dropZoneVariants = cva('border-none text-sm font-semibold', {
-  variants: {
-    status: {
-      [TaskStatus.UrgentImportant]: 'bg-quadrant-red text-icon-do',
-      [TaskStatus.UrgentNotImportant]: 'bg-quadrant-green text-icon-delegable',
-      [TaskStatus.NotUrgentImportant]: 'bg-quadrant-yellow text-icon-schedule',
-      [TaskStatus.NotUrgentNotImportant]: 'bg-quadrant-blue text-icon-later',
-    },
-    defaultVariants: {
-      status: TaskStatus.UrgentImportant,
+const dropZoneVariants = cva(
+  'flex items-center justify-center border-none text-sm font-semibold',
+  {
+    variants: {
+      status: {
+        [TaskStatus.UrgentImportant]: 'bg-quadrant-red text-icon-do',
+        [TaskStatus.UrgentNotImportant]:
+          'bg-quadrant-green text-icon-delegable',
+        [TaskStatus.NotUrgentImportant]:
+          'bg-quadrant-yellow text-icon-schedule',
+        [TaskStatus.NotUrgentNotImportant]: 'bg-quadrant-blue text-icon-later',
+      },
+      isOver: {
+        true: [
+          'drop-shadow-[0_0_2px_var(--background)]',
+          'drop-shadow-[0_0_4px_var(--background)]',
+          'drop-shadow-[0_0_8px_var(--background)]',
+          'shadow-[inset_0_0_2px_var(--background)]',
+          'shadow-[inset_0_0_4px_var(--background)]',
+          'shadow-[inset_0_0_8px_var(--background)]',
+        ].join(' '),
+      },
+
+      defaultVariants: {
+        status: TaskStatus.UrgentImportant,
+        isOver: false,
+      },
     },
   },
-})
-
-const matrixTypo: Record<TaskStatus, string> = {
-  [TaskStatus.UrgentImportant]: 'Do Now!',
-  [TaskStatus.UrgentNotImportant]: 'Delegable',
-  [TaskStatus.NotUrgentImportant]: 'Schedule',
-  [TaskStatus.NotUrgentNotImportant]: 'Later',
-}
+)
 
 export function DropZone({ status }: DropZoneProps) {
   const { isOver, setNodeRef } = useDroppable({
     id: status,
   })
 
-  const style = {
-    filter: isOver
-      ? `drop-shadow(0 0 2px var(--background))
-                      drop-shadow(0 0 4px var(--background))
-                      drop-shadow(0 0 8px var(--background))`
-      : undefined,
-    boxShadow: isOver
-      ? `inset 0 0 2px var(--background),
-      inset 0 0 4px var(--background),
-      inset 0 0 8px var(--background)`
-      : undefined,
-  }
+  const IconComponent = MATRIX_CONFIG[status].icon
+
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className={cn(
-        dropZoneVariants({ status }),
-        'flex items-center justify-center',
-      )}
-    >
+    <div ref={setNodeRef} className={cn(dropZoneVariants({ status, isOver }))}>
       <div className="flex flex-col items-center justify-center gap-0.5">
-        {status === TaskStatus.UrgentImportant && <Zap className="w-6 h-6" />}
-        {status === TaskStatus.UrgentNotImportant && (
-          <Send className="w-6 h-6" />
-        )}
-        {status === TaskStatus.NotUrgentImportant && (
-          <Star className="w-6 h-6" />
-        )}
-        {status === TaskStatus.NotUrgentNotImportant && (
-          <Clock className="w-6 h-6" />
-        )}
-        {matrixTypo[status]}
+        <IconComponent className="w-6 h-6" />
+        {MATRIX_CONFIG[status].label}
       </div>
     </div>
   )
