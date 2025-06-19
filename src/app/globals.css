@@ -119,6 +119,7 @@
   --quadrant-yellow-glow: 0 0 16px 4px oklch(0.9 0.22 100 / 0.33);
   --quadrant-green-glow: 0 0 16px 4px oklch(0.7 0.22 149.579 / 0.33);
   --quadrant-blue-glow: 0 0 16px 4px oklch(0.6 0.22 265 / 0.33);
+  --light: oklch(0.985 0.004 286.32);
 
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
@@ -181,6 +182,7 @@
   --quadrant-yellow-glow: 0 0 16px 4px oklch(0.9 0.22 100 / 0.33);
   --quadrant-green-glow: 0 0 16px 4px oklch(0.7 0.22 149.579 / 0.33);
   --quadrant-blue-glow: 0 0 16px 4px oklch(0.6 0.22 265 / 0.33);
+  --light: oklch(0.985 0.004 286.32);
 
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);

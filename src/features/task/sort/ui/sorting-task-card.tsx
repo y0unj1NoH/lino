@@ -68,7 +68,11 @@ export const SortingTaskCard = ({
         className,
       )}
     >
-      <TaskCard id={id} content={content} />
+      <TaskCard
+        id={id}
+        content={content}
+        className="dark:bg-black dark:hover:bg-accent"
+      />
     </div>
   )
 }
