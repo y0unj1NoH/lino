@@ -8,6 +8,7 @@ interface CheckboxWithLabelProps {
   onCheckedChange?: (checked: boolean) => void
   color?: 'primary' | 'secondary' | 'muted'
   strikethrough?: boolean
+  checkboxSize?: 'xs' | 'sm' | 'md' | 'lg'
   className?: string
 }
 
@@ -18,6 +19,7 @@ export function CheckboxWithLabel({
   onCheckedChange,
   color = 'primary',
   strikethrough = false,
+  checkboxSize,
   className,
 }: CheckboxWithLabelProps) {
   return (
@@ -26,6 +28,7 @@ export function CheckboxWithLabel({
         id={id}
         className={className}
         variant={color}
+        size={checkboxSize}
         checked={checked}
         onCheckedChange={onCheckedChange}
         aria-checked={checked}
@@ -43,5 +46,4 @@ export function CheckboxWithLabel({
       </label>
     </div>
   )
-
 }

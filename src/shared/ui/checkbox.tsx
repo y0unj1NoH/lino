@@ -19,9 +19,16 @@ const checkboxVariants = cva(
         muted:
           'data-[state=checked]:bg-muted-foreground data-[state=checked]:text-muted data-[state=checked]:border-muted-foreground',
       },
+      size: {
+        xs: 'size-4',
+        sm: 'size-4.5',
+        md: 'size-6',
+        lg: 'size-7',
+      },
     },
     defaultVariants: {
       variant: 'primary',
+      size: 'xs',
     },
   },
 )
@@ -29,14 +36,16 @@ const checkboxVariants = cva(
 function Checkbox({
   className,
   variant,
+  size,
   ...props
 }: React.ComponentProps<typeof CheckboxPrimitive.Root> & {
   variant?: 'primary' | 'secondary' | 'muted'
+  size?: 'xs' | 'sm' | 'md' | 'lg'
 }) {
   return (
     <CheckboxPrimitive.Root
       data-slot="checkbox"
-      className={cn(checkboxVariants({ variant }), className)}
+      className={cn(checkboxVariants({ variant, size }), className)}
       {...props}
     >
       <CheckboxPrimitive.Indicator

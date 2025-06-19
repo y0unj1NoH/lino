@@ -31,6 +31,7 @@ export const TaskCheckItems = ({ status }: TaskCheckItemsProps) => {
             }
           }}
           strikethrough
+          checkboxSize="sm"
         />
       ))}
     </div>
