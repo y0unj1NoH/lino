@@ -13,10 +13,14 @@ import { showToast } from '@/shared/lib/toast'
  */
 export function useDailyReset() {
   const pathname = usePathname()
+  const hydrated = useDailyResetStore((state) => state.hydrated)
   const lastResetDate = useDailyResetStore((state) => state.lastResetDate)
   const setLastResetDate = useDailyResetStore((state) => state.setLastResetDate)
   const resetTasks = useTaskStore((state) => state.resetTasks)
   useEffect(() => {
+    if (!hydrated) {
+      return
+    }
     if (isResetToday(lastResetDate)) {
       return
     }
@@ -24,5 +28,5 @@ export function useDailyReset() {
     showToast(RESET_TOAST.success)
     resetTasks()
     setLastResetDate(getTodayBy4am())
-  }, [pathname])
+  }, [pathname, hydrated])
 }
