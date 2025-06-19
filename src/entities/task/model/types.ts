@@ -50,7 +50,7 @@ interface TaskActions {
   completeTask: (taskId: string) => void
   uncompleteTask: (taskId: string) => void
   setSortingStatus: (status: SortingStatus) => void
-  resetUnfinishedTasks: () => void
+  resetTasks: () => void
 }
 
 export type TaskStore = TaskState & TaskActions
