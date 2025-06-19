@@ -30,6 +30,42 @@ export const useTaskStore = create<TaskStore>()(
           )
         }
 
+        // resetTasks 헬퍼 함수
+        const resetTask = (task: Task, now: Date) => {
+          // 1. 오늘 미완료 태스크  → 미분류+isToday 해제+postponedCount 증가
+          if (
+            (!task.completedAt && task.status !== TaskStatus.Unassigned) ||
+            (task.status === TaskStatus.Unassigned && task.isToday)
+          ) {
+            return {
+              ...task,
+              status: TaskStatus.Unassigned,
+              isToday: false,
+              postponedCount: task.postponedCount + 1,
+              updatedAt: now,
+            }
+          }
+          // 2. 분류 때 미룬 태스크 → 미분류+isToday 해제
+          if (task.status === TaskStatus.Postponed) {
+            return {
+              ...task,
+              status: TaskStatus.Unassigned,
+              isToday: false,
+              updatedAt: now,
+            }
+          }
+          // 3. 오늘 완료된 태스크 → isToday 해제
+          if (task.completedAt && task.isToday) {
+            return {
+              ...task,
+              isToday: false,
+              updatedAt: now,
+            }
+          }
+          // 4. 그 외는 변경 없음
+          return task
+        }
+
         return {
           tasks: [],
           sortingStatus: undefined,
@@ -116,31 +152,19 @@ export const useTaskStore = create<TaskStore>()(
               'setSortingStatus',
             ),
 
-          resetUnfinishedTasks: () => {
+          resetTasks: () => {
             const now = getCurrentDate()
             set(
               (state) => ({
                 sortingStatus: 'UNSORTED',
-                tasks: state.tasks.map((task) => {
-                  if (
-                    (!task.completedAt &&
-                      task.status !== TaskStatus.Unassigned) ||
-                    task.status === TaskStatus.Postponed
-                  ) {
-                    return {
-                      ...task,
-                      status: TaskStatus.Unassigned,
-                      isToday: false,
-                      updatedAt: now,
-                    }
-                  }
-                  return task
-                }),
+                tasks: state.tasks.map((task) => resetTask(task, now)),
               }),
               false,
-              'resetUnfinishedTasks',
+              'resetTasks',
             )
           },
+          hydrated: false,
+          setHydrated: (hydrated) => set({ hydrated }),
         }
       },
       {
@@ -152,6 +176,8 @@ export const useTaskStore = create<TaskStore>()(
               updatedAt: toUTCDate(task.updatedAt),
               completedAt: task.completedAt && toUTCDate(task.completedAt),
             }))
+
+            state.setHydrated(true)
           }
         },
       },

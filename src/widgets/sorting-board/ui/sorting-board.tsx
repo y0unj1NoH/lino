@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 
 import { useTaskStore } from '@/entities/task/model/slice'
 import { Task, TaskStatus } from '@/entities/task/model/types'
@@ -14,12 +14,12 @@ interface SortingBoardProps {
 
 export function SortingBoard({ tasks }: SortingBoardProps) {
   const router = useRouter()
+  const hydrated = useTaskStore((state) => state.hydrated)
+
   const setSortingStatus = useTaskStore((state) => state.setSortingStatus)
-  const hasLoaded = useRef(false)
 
   useEffect(() => {
-    if (!hasLoaded.current) {
-      hasLoaded.current = true
+    if (!hydrated) {
       return
     }
 
@@ -27,9 +27,9 @@ export function SortingBoard({ tasks }: SortingBoardProps) {
       setSortingStatus('SORTED')
       router.push('/unsorted')
     }
-  }, [tasks.length, router, setSortingStatus])
+  }, [tasks.length, router, setSortingStatus, hydrated])
 
-  if (tasks.length === 0 && hasLoaded.current) {
+  if (tasks.length === 0 && hydrated) {
     return (
       <div className="h-full flex justify-center items-center">
         <p className="text-lg font-semibold">분류가 완료되었어요!</p>
