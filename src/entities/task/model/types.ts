@@ -38,6 +38,7 @@ export type SortingStatus =
 interface TaskState {
   tasks: Task[]
   sortingStatus: SortingStatus | undefined
+  hydrated: boolean
 }
 
 interface TaskActions {
@@ -51,6 +52,7 @@ interface TaskActions {
   uncompleteTask: (taskId: string) => void
   setSortingStatus: (status: SortingStatus) => void
   resetTasks: () => void
+  setHydrated: (hydrated: boolean) => void
 }
 
 export type TaskStore = TaskState & TaskActions

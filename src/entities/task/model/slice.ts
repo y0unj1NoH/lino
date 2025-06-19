@@ -163,6 +163,8 @@ export const useTaskStore = create<TaskStore>()(
               'resetTasks',
             )
           },
+          hydrated: false,
+          setHydrated: (hydrated) => set({ hydrated }),
         }
       },
       {
@@ -174,6 +176,8 @@ export const useTaskStore = create<TaskStore>()(
               updatedAt: toUTCDate(task.updatedAt),
               completedAt: task.completedAt && toUTCDate(task.completedAt),
             }))
+
+            state.setHydrated(true)
           }
         },
       },
