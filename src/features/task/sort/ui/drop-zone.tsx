@@ -23,12 +23,12 @@ const dropZoneVariants = cva(
       },
       isOver: {
         true: [
-          'drop-shadow-[0_0_2px_var(--background)]',
-          'drop-shadow-[0_0_4px_var(--background)]',
-          'drop-shadow-[0_0_8px_var(--background)]',
-          'shadow-[inset_0_0_2px_var(--background)]',
-          'shadow-[inset_0_0_4px_var(--background)]',
-          'shadow-[inset_0_0_8px_var(--background)]',
+          'drop-shadow-[0_0_2px_var(--light)]',
+          'drop-shadow-[0_0_4px_var(--light)]',
+          'drop-shadow-[0_0_8px_var(--light)]',
+          'shadow-[inset_0_0_2px_var(--light)]',
+          'shadow-[inset_0_0_4px_var(--light)]',
+          'shadow-[inset_0_0_8px_var(--light)]',
         ].join(' '),
       },
 
