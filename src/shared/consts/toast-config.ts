@@ -5,6 +5,14 @@ export const TOAST_DEFAULT_OPTIONS = {
   richColors: true,
 } as const
 
+export const RESET_TOAST = {
+  success: {
+    message: '하루가 지났어요. 할 일을 업데이트 중이에요.',
+    type: 'success',
+    duration: 2000,
+  },
+} as const
+
 export const ADD_TOAST = {
   success: {
     message: '할 일이 추가되었어요!',
