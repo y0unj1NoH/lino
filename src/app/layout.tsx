@@ -3,6 +3,7 @@
 import { ThemeProvider } from 'next-themes'
 import { Geist, Geist_Mono as GeistMono } from 'next/font/google'
 
+import { useDailyReset } from '@/features/task/reset/model/useDailyReset'
 import { useKeyboard } from '@/shared/hooks/useKeyboard'
 import { cn } from '@/shared/lib/utils'
 import { BottomNavigation } from '@/shared/ui/bottom-navigation'
@@ -30,6 +31,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   const { visible } = useKeyboard()
+  useDailyReset()
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
