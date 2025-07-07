@@ -12,11 +12,16 @@ export type MatrixTaskStatus = Exclude<
   TaskStatus.Unassigned | TaskStatus.Postponed
 >
 
+// TaskMap: 각 Task의 id(UUID)를 key로 하여 Task 객체를 저장하는 Map
+export type TaskMap = Map<string, Task>
+
+// TaskList: [id, Task] 쌍의 배열로, Map의 entries()에서 사용
+export type TaskList = [string, Task][]
+
 export interface Task {
-  // UUID
-  id: string
   // 할 일 내용
   content: string
+  // 분류 상테
   status: TaskStatus
   // "오늘 바로 해야하는 일" 체크시 true
   isToday: boolean
@@ -36,7 +41,7 @@ export type SortingStatus =
   | 'ADDITIONAL_SORTING' // 추가 분류 중
 
 interface TaskState {
-  tasks: Task[]
+  tasks: TaskMap
   sortingStatus: SortingStatus | undefined
   hydrated: boolean
 }

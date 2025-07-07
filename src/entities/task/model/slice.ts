@@ -18,13 +18,18 @@ export const useTaskStore = create<TaskStore>()(
         ) => {
           const now = getCurrentDate()
           set(
-            (state) => ({
-              tasks: state.tasks.map((task) =>
-                task.id === id
-                  ? { ...task, ...updater(task, now), updatedAt: now }
-                  : task,
-              ),
-            }),
+            (state) => {
+              const newTasks = new Map(state.tasks)
+              const task = newTasks.get(id)
+              if (task) {
+                newTasks.set(id, {
+                  ...task,
+                  ...updater(task, now),
+                  updatedAt: now,
+                })
+              }
+              return { tasks: newTasks }
+            },
             false,
             actionName,
           )
@@ -67,24 +72,22 @@ export const useTaskStore = create<TaskStore>()(
         }
 
         return {
-          tasks: [],
+          tasks: new Map(),
           sortingStatus: undefined,
 
           addTask: (content, isToday = false) =>
             set(
-              (state) => ({
-                tasks: [
-                  ...state.tasks,
-                  {
-                    id: nanoid(),
-                    content,
-                    status: TaskStatus.Unassigned,
-                    isToday,
-                    postponedCount: 0,
-                    updatedAt: getCurrentDate(),
-                  },
-                ],
-              }),
+              (state) => {
+                const newTasks = new Map(state.tasks)
+                newTasks.set(nanoid(), {
+                  content,
+                  status: TaskStatus.Unassigned,
+                  isToday,
+                  postponedCount: 0,
+                  updatedAt: getCurrentDate(),
+                })
+                return { tasks: newTasks }
+              },
               false,
               'addTask',
             ),
@@ -94,20 +97,26 @@ export const useTaskStore = create<TaskStore>()(
 
           deleteTask: (id) =>
             set(
-              (state) => ({
-                tasks: state.tasks.filter((task) => task.id !== id),
-              }),
+              (state) => {
+                const newTasks = new Map(state.tasks)
+                newTasks.delete(id)
+                return { tasks: newTasks }
+              },
               false,
               'deleteTask',
             ),
 
           deleteAllTask: () =>
             set(
-              (state) => ({
-                tasks: state.tasks.filter(
-                  (task) => task.status !== TaskStatus.Unassigned,
-                ),
-              }),
+              (state) => {
+                const newTasks = new Map(state.tasks)
+                for (const [id, task] of newTasks) {
+                  if (task.status === TaskStatus.Unassigned) {
+                    newTasks.delete(id)
+                  }
+                }
+                return { tasks: newTasks }
+              },
               false,
               'deleteAllTask',
             ),
@@ -155,10 +164,13 @@ export const useTaskStore = create<TaskStore>()(
           resetTasks: () => {
             const now = getCurrentDate()
             set(
-              (state) => ({
-                sortingStatus: 'UNSORTED',
-                tasks: state.tasks.map((task) => resetTask(task, now)),
-              }),
+              (state) => {
+                const newTasks = new Map(state.tasks)
+                for (const [id, task] of newTasks) {
+                  newTasks.set(id, resetTask(task, now))
+                }
+                return { tasks: newTasks }
+              },
               false,
               'resetTasks',
             )
@@ -171,12 +183,16 @@ export const useTaskStore = create<TaskStore>()(
         name: 'task-store-persist',
         onRehydrateStorage: () => (state) => {
           if (state) {
-            state.tasks = state.tasks.map((task) => ({
-              ...task,
-              updatedAt: toUTCDate(task.updatedAt),
-              completedAt: task.completedAt && toUTCDate(task.completedAt),
-            }))
+            const newTasks = new Map(state.tasks)
+            for (const [id, task] of newTasks) {
+              newTasks.set(id, {
+                ...task,
+                updatedAt: toUTCDate(task.updatedAt),
+                completedAt: task.completedAt && toUTCDate(task.completedAt),
+              })
+            }
 
+            state.tasks = newTasks
             state.setHydrated(true)
           }
         },
