@@ -3,12 +3,12 @@
 import { useState } from 'react'
 
 import { useTaskStore } from '@/entities/task/model/slice'
-import { Task } from '@/entities/task/model/types'
+import { TaskList } from '@/entities/task/model/types'
 import { TaskEditableCard } from '@/entities/task/ui/task-editable-card'
 import { EditTaskContainer } from '@/features/task/organize/ui/edit-task-container'
 
 interface TaskEditableListProps {
-  tasks: Task[]
+  tasks: TaskList
 }
 
 export function TaskEditableList({ tasks }: TaskEditableListProps) {
@@ -17,9 +17,9 @@ export function TaskEditableList({ tasks }: TaskEditableListProps) {
   const deleteTask = useTaskStore((state) => state.deleteTask)
 
   // 편집 모드 열기
-  const openEdit = (task: Task) => {
-    setEditingTaskId(task.id)
-    setEditContent(task.content)
+  const openEdit = (id: string, content: string) => {
+    setEditingTaskId(id)
+    setEditContent(content)
   }
 
   // 편집 모드 닫기
@@ -30,13 +30,13 @@ export function TaskEditableList({ tasks }: TaskEditableListProps) {
   return (
     <>
       <div className="flex flex-col gap-2">
-        {tasks.map((task) => (
+        {tasks.map(([id, task]) => (
           <TaskEditableCard
-            key={task.id}
-            id={task.id}
+            key={id}
+            id={id}
             content={task.content}
-            onEdit={() => openEdit(task)}
-            onDelete={() => deleteTask(task.id)}
+            onEdit={() => openEdit(id, task.content)}
+            onDelete={() => deleteTask(id)}
           />
         ))}
       </div>

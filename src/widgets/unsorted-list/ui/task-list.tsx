@@ -1,17 +1,17 @@
-import { Task } from '@/entities/task/model/types'
+import { TaskList as TypeTaskList } from '@/entities/task/model/types'
 import { TaskCard } from '@/entities/task/ui/task-card'
 
 interface TaskListProps {
-  tasks: Task[]
+  tasks: TypeTaskList
 }
 
 export function TaskList({ tasks }: TaskListProps) {
   return (
     <div className="flex flex-col gap-2">
-      {tasks.map((task: Task) => (
+      {tasks.map(([id, task]) => (
         <TaskCard
-          key={task.id}
-          id={task.id}
+          key={id}
+          id={id}
           content={task.content}
           isToday={task.isToday}
         />

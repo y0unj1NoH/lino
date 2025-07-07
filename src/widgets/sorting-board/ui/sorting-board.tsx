@@ -4,12 +4,12 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 import { useTaskStore } from '@/entities/task/model/slice'
-import { Task, TaskStatus } from '@/entities/task/model/types'
+import { TaskList, TaskStatus } from '@/entities/task/model/types'
 import { DropZone } from '@/features/task/sort/ui/drop-zone'
 import { SortingTaskCard } from '@/features/task/sort/ui/sorting-task-card'
 
 interface SortingBoardProps {
-  tasks: Task[]
+  tasks: TaskList
 }
 
 export function SortingBoard({ tasks }: SortingBoardProps) {
@@ -45,10 +45,10 @@ export function SortingBoard({ tasks }: SortingBoardProps) {
         <DropZone status={TaskStatus.UrgentNotImportant} />
         <DropZone status={TaskStatus.NotUrgentNotImportant} />
       </div>
-      {tasks.map((task, index) => (
+      {tasks.map(([id, task], index) => (
         <SortingTaskCard
-          key={task.id}
-          id={task.id}
+          key={id}
+          id={id}
           content={task.content}
           index={index}
           className="absolute top-1/2 left-1/2 -translate-x-1/2"
