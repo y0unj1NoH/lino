@@ -4,6 +4,8 @@ import { Header } from '@/shared/ui/header'
 import { ThemeToggle } from '@/shared/ui/theme-toggle'
 import { MatrixBoard } from '@/widgets/matrix-board/ui/matrix-board'
 
+export const revalidate = 0
+
 function HomeHeader() {
   return (
     <Header>
