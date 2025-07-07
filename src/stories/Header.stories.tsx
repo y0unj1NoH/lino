@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs'
 
-import { formatDateToEnglish, getCurrentDate } from '@/shared/lib/date'
+import { getTodayEnglishFormat } from '@/shared/lib/date'
 import { ButtonGhost } from '@/shared/ui/button'
 import { Header } from '@/shared/ui/header'
 
@@ -24,7 +24,7 @@ export const Home: Story = {
         <Header.Logo>Lino</Header.Logo>
       </Header.Left>
       <Header.Right>
-        <Header.Date>{formatDateToEnglish(getCurrentDate())}</Header.Date>
+        <Header.Date>{getTodayEnglishFormat()}</Header.Date>
       </Header.Right>
     </Header>
   ),
@@ -76,7 +76,7 @@ export const AllSection: Story = {
         <Header.Title>Task Details</Header.Title>
       </Header.Center>
       <Header.Right>
-        <Header.Date>{formatDateToEnglish(getCurrentDate())}</Header.Date>
+        <Header.Date>{getTodayEnglishFormat()}</Header.Date>
         <Header.Actions>
           <ButtonGhost>Edit</ButtonGhost>
           <ButtonGhost>Delete</ButtonGhost>

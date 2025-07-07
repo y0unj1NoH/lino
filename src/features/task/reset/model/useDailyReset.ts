@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { useTaskStore } from '@/entities/task/model/slice'
 import { useDailyResetStore } from '@/features/task/reset/model/slice'
 import { RESET_TOAST } from '@/shared/consts/toast-config'
-import { getTodayBy4am, isResetToday } from '@/shared/lib/date'
+import { getToday, isResetToday } from '@/shared/lib/date'
 import { showToast } from '@/shared/lib/toast'
 
 /**
@@ -27,6 +27,6 @@ export function useDailyReset() {
 
     showToast(RESET_TOAST.success)
     resetTasks()
-    setLastResetDate(getTodayBy4am())
+    setLastResetDate(getToday())
   }, [pathname, hydrated])
 }

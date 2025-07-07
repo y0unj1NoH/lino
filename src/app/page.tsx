@@ -1,5 +1,7 @@
+import dayjs from 'dayjs'
+
 import { SortingButton } from '@/features/task/sort/ui/sorting-button'
-import { formatDateToEnglish, getCurrentDate } from '@/shared/lib/date'
+import { getTodayEnglishFormat } from '@/shared/lib/date'
 import { Header } from '@/shared/ui/header'
 import { ThemeToggle } from '@/shared/ui/theme-toggle'
 import { MatrixBoard } from '@/widgets/matrix-board/ui/matrix-board'
@@ -13,7 +15,7 @@ function HomeHeader() {
         <Header.Logo>Lino</Header.Logo>
       </Header.Left>
       <Header.Right>
-        <Header.Date>{formatDateToEnglish(getCurrentDate())}</Header.Date>
+        <Header.Date>{getTodayEnglishFormat()}</Header.Date>
         <ThemeToggle size="sm" className="rounded-full shadow-none" />
       </Header.Right>
     </Header>
