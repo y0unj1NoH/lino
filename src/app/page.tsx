@@ -1,5 +1,3 @@
-import dayjs from 'dayjs'
-
 import { SortingButton } from '@/features/task/sort/ui/sorting-button'
 import { getTodayEnglishFormat } from '@/shared/lib/date'
 import { Header } from '@/shared/ui/header'
