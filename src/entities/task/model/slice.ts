@@ -4,7 +4,7 @@ import { devtools, persist } from 'zustand/middleware'
 
 import { getCurrentDate, toUTCDate } from '@/shared/lib/date'
 
-import { SortingStatus, Task, TaskStatus, TaskStore } from './types'
+import { Task, TaskStatus, TaskStore } from './types'
 
 export const useTaskStore = create<TaskStore>()(
   devtools(
@@ -124,6 +124,31 @@ export const useTaskStore = create<TaskStore>()(
           sortTask: (id, status) =>
             updateTaskById(id, () => ({ status, isToday: true }), 'sortTask'),
 
+          undoTask: (id) =>
+            set(
+              (state) => {
+                const sortingStatus = state.sortingStatus
+                const task = state.tasks.get(id)
+                if (!task) {
+                  return { tasks: state.tasks }
+                }
+
+                const newTasks = new Map(state.tasks)
+                newTasks.set(id, {
+                  ...task,
+                  status: TaskStatus.Unassigned,
+                  isToday: sortingStatus === 'ADDITIONAL_SORTING',
+                  postponedCount:
+                    task.status === TaskStatus.Postponed
+                      ? task.postponedCount - 1
+                      : task.postponedCount,
+                })
+                return { tasks: newTasks }
+              },
+              false,
+              'undoTask',
+            ),
+
           postponeTask: (id) =>
             updateTaskById(
               id,
@@ -152,7 +177,7 @@ export const useTaskStore = create<TaskStore>()(
               'uncompleteTask',
             ),
 
-          setSortingStatus: (status: SortingStatus) =>
+          setSortingStatus: (status) =>
             set(
               {
                 sortingStatus: status,

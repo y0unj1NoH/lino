@@ -52,6 +52,7 @@ interface TaskActions {
   deleteTask: (taskId: string) => void
   deleteAllTask: () => void
   sortTask: (taskId: string, status: TaskStatus) => void
+  undoTask: (taskId: string) => void
   postponeTask: (taskId: string) => void
   completeTask: (taskId: string) => void
   uncompleteTask: (taskId: string) => void
