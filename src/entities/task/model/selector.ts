@@ -13,18 +13,21 @@ export const isTodayTask = ([_, task]: [string, Task]) => task.isToday
  * (컴포넌트 외부에서 직접 상태 접근용)
  * @returns {TaskList} 분류되지 않은 태스크 목록
  */
-export const getUnsortedTasks = (): TaskList =>
-  [...useTaskStore.getState().tasks.entries()].filter(isUnsorted)
-
+export const getUnsortedTasks = (): TaskList => {
+  const tasks = useTaskStore.getState().tasks
+  return Object.entries(tasks).filter(isUnsorted)
+}
 /**
  * 현재 상태에서 오늘 날짜이고 분류되지 않은 태스크 배열을 반환합니다.
  * (컴포넌트 외부에서 직접 상태 접근용)
  * @returns {TaskList} 오늘 할 일 중 분류되지 않은 태스크 목록
  */
-export const getUnsortedTodayTasks = (): TaskList =>
-  [...useTaskStore.getState().tasks.entries()].filter(
+export const getUnsortedTodayTasks = (): TaskList => {
+  const tasks = useTaskStore.getState().tasks
+  return Object.entries(tasks).filter(
     (task) => isUnsorted(task) && isTodayTask(task),
   )
+}
 
 /**
  * 분류되지 않은 태스크 목록을 구독 및 반환
@@ -35,7 +38,7 @@ export const useUnsortedTasks = (): TaskList => {
   const tasks = useTaskStore((state) => state.tasks)
 
   return useMemo(() => {
-    return [...tasks.entries()].filter(isUnsorted)
+    return Object.entries(tasks).filter(isUnsorted)
   }, [tasks])
 }
 
@@ -48,7 +51,7 @@ export const useUnsortedTodayTasks = (): TaskList => {
   const tasks = useTaskStore((state) => state.tasks)
 
   return useMemo(() => {
-    return [...tasks.entries()].filter(
+    return Object.entries(tasks).filter(
       (task) => isUnsorted(task) && isTodayTask(task),
     )
   }, [tasks])
@@ -63,8 +66,8 @@ export const useTodaySortedTasks = (status: TaskStatus): TaskList => {
   const tasks = useTaskStore((state) => state.tasks)
 
   return useMemo(() => {
-    return [...tasks.entries()].filter(
-      ([_, task]: [string, Task]) =>
+    return Object.entries(tasks).filter(
+      ([_, task]) =>
         task.status === status &&
         task.isToday &&
         task.status !== TaskStatus.Unassigned,
