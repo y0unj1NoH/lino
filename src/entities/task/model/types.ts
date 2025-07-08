@@ -13,7 +13,7 @@ export type MatrixTaskStatus = Exclude<
 >
 
 // TaskMap: 각 Task의 id(UUID)를 key로 하여 Task 객체를 저장하는 Map
-export type TaskMap = Map<string, Task>
+export type TaskMap = Record<string, Task>
 
 // TaskList: [id, Task] 쌍의 배열로, Map의 entries()에서 사용
 export type TaskList = [string, Task][]
