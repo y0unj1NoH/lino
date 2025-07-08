@@ -5,7 +5,7 @@ import { Task, TaskList, TaskStatus } from './types'
 
 export const isCompleted = ([_, task]: [string, Task]) => !!task.completedAt
 export const isUnsorted = ([_, task]: [string, Task]) =>
-  task.status === TaskStatus.Unassigned
+  task.status === TaskStatus.Unassigned || task.status === TaskStatus.Postponed
 export const isTodayTask = ([_, task]: [string, Task]) => task.isToday
 
 /**
@@ -67,10 +67,7 @@ export const useTodaySortedTasks = (status: TaskStatus): TaskList => {
 
   return useMemo(() => {
     return Object.entries(tasks).filter(
-      ([_, task]) =>
-        task.status === status &&
-        task.isToday &&
-        task.status !== TaskStatus.Unassigned,
+      ([_, task]) => task.status === status && task.isToday,
     )
   }, [tasks, status])
 }
