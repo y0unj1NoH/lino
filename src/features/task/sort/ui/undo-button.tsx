@@ -16,6 +16,9 @@ export function UndoButton({ originalTasks, id, className }: UndoButtonProps) {
   const undoTask = useTaskStore((state) => state.undoTask)
 
   const handleClick = () => {
+    if (originalTasks[0][0] === id) {
+      return
+    }
     const targetTask = originalTasks.find(
       (_, index) => originalTasks[index + 1][0] === id,
     )
