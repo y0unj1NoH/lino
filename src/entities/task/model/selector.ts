@@ -5,7 +5,9 @@ import { Task, TaskList, TaskStatus } from './types'
 
 export const isCompleted = ([_, task]: [string, Task]) => !!task.completedAt
 export const isUnsorted = ([_, task]: [string, Task]) =>
-  task.status === TaskStatus.Unassigned || task.status === TaskStatus.Postponed
+  task.status === TaskStatus.Unassigned
+export const isPostponed = ([_, task]: [string, Task]) =>
+  task.status === TaskStatus.Postponed
 export const isTodayTask = ([_, task]: [string, Task]) => task.isToday
 
 /**
@@ -17,6 +19,7 @@ export const getUnsortedTasks = (): TaskList => {
   const tasks = useTaskStore.getState().tasks
   return Object.entries(tasks).filter(isUnsorted)
 }
+
 /**
  * 현재 상태에서 오늘 날짜이고 분류되지 않은 태스크 배열을 반환합니다.
  * (컴포넌트 외부에서 직접 상태 접근용)
@@ -39,6 +42,21 @@ export const useUnsortedTasks = (): TaskList => {
 
   return useMemo(() => {
     return Object.entries(tasks).filter(isUnsorted)
+  }, [tasks])
+}
+
+/**
+ * 분류되지 않은 태스크 목록을 구독 및 반환
+ * (unsorted 페이지에서 사용)
+ * @returns {TaskList} 분류되지 않은 태스크 목록
+ */
+export const useUnsortedOrPostponeTasks = (): TaskList => {
+  const tasks = useTaskStore((state) => state.tasks)
+
+  return useMemo(() => {
+    return Object.entries(tasks).filter(
+      (task) => isUnsorted(task) || isPostponed(task),
+    )
   }, [tasks])
 }
 
