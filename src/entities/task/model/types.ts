@@ -21,7 +21,7 @@ export type TaskList = [string, Task][]
 export interface Task {
   // 할 일 내용
   content: string
-  // 분류 상테
+  // 분류 상태
   status: TaskStatus
   // "오늘 바로 해야하는 일" 체크시 true
   isToday: boolean
