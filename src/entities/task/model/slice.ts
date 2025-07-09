@@ -4,7 +4,7 @@ import { devtools, persist } from 'zustand/middleware'
 
 import { getCurrentDate, toUTCDate } from '@/shared/lib/date'
 
-import { SortingStatus, Task, TaskStatus, TaskStore } from './types'
+import { Task, TaskStatus, TaskStore } from './types'
 
 export const useTaskStore = create<TaskStore>()(
   devtools(
@@ -18,13 +18,23 @@ export const useTaskStore = create<TaskStore>()(
         ) => {
           const now = getCurrentDate()
           set(
-            (state) => ({
-              tasks: state.tasks.map((task) =>
-                task.id === id
-                  ? { ...task, ...updater(task, now), updatedAt: now }
-                  : task,
-              ),
-            }),
+            (state) => {
+              const task = state.tasks[id]
+              if (!task) {
+                return state
+              }
+
+              return {
+                tasks: {
+                  ...state.tasks,
+                  [id]: {
+                    ...task,
+                    ...updater(task, now),
+                    updatedAt: now,
+                  },
+                },
+              }
+            },
             false,
             actionName,
           )
@@ -67,23 +77,22 @@ export const useTaskStore = create<TaskStore>()(
         }
 
         return {
-          tasks: [],
+          tasks: {},
           sortingStatus: undefined,
 
           addTask: (content, isToday = false) =>
             set(
               (state) => ({
-                tasks: [
+                tasks: {
                   ...state.tasks,
-                  {
-                    id: nanoid(),
+                  [nanoid()]: {
                     content,
                     status: TaskStatus.Unassigned,
                     isToday,
                     postponedCount: 0,
                     updatedAt: getCurrentDate(),
                   },
-                ],
+                },
               }),
               false,
               'addTask',
@@ -94,26 +103,59 @@ export const useTaskStore = create<TaskStore>()(
 
           deleteTask: (id) =>
             set(
-              (state) => ({
-                tasks: state.tasks.filter((task) => task.id !== id),
-              }),
+              (state) => {
+                const { [id]: _, ...rest } = state.tasks
+                return { tasks: rest }
+              },
               false,
               'deleteTask',
             ),
 
           deleteAllTask: () =>
             set(
-              (state) => ({
-                tasks: state.tasks.filter(
-                  (task) => task.status !== TaskStatus.Unassigned,
-                ),
-              }),
+              (state) => {
+                const rest = Object.fromEntries(
+                  Object.entries(state.tasks).filter(
+                    ([_, task]) => task.status !== TaskStatus.Unassigned,
+                  ),
+                )
+                return { tasks: rest }
+              },
               false,
               'deleteAllTask',
             ),
 
           sortTask: (id, status) =>
             updateTaskById(id, () => ({ status, isToday: true }), 'sortTask'),
+
+          undoTask: (id) =>
+            set(
+              (state) => {
+                const sortingStatus = state.sortingStatus
+                const task = state.tasks[id]
+                if (!task) {
+                  return state
+                }
+
+                return {
+                  tasks: {
+                    ...state.tasks,
+                    [id]: {
+                      ...task,
+                      status: TaskStatus.Unassigned,
+                      isToday: sortingStatus === 'ADDITIONAL_SORTING',
+                      postponedCount:
+                        task.status === TaskStatus.Postponed
+                          ? task.postponedCount - 1
+                          : task.postponedCount,
+                      updatedAt: getCurrentDate(),
+                    },
+                  },
+                }
+              },
+              false,
+              'undoTask',
+            ),
 
           postponeTask: (id) =>
             updateTaskById(
@@ -143,7 +185,7 @@ export const useTaskStore = create<TaskStore>()(
               'uncompleteTask',
             ),
 
-          setSortingStatus: (status: SortingStatus) =>
+          setSortingStatus: (status) =>
             set(
               {
                 sortingStatus: status,
@@ -155,10 +197,15 @@ export const useTaskStore = create<TaskStore>()(
           resetTasks: () => {
             const now = getCurrentDate()
             set(
-              (state) => ({
-                sortingStatus: 'UNSORTED',
-                tasks: state.tasks.map((task) => resetTask(task, now)),
-              }),
+              (state) => {
+                const newTasks = Object.fromEntries(
+                  Object.entries(state.tasks).map(([id, task]) => [
+                    id,
+                    resetTask(task, now),
+                  ]),
+                )
+                return { tasks: newTasks }
+              },
               false,
               'resetTasks',
             )
@@ -171,12 +218,20 @@ export const useTaskStore = create<TaskStore>()(
         name: 'task-store-persist',
         onRehydrateStorage: () => (state) => {
           if (state) {
-            state.tasks = state.tasks.map((task) => ({
-              ...task,
-              updatedAt: toUTCDate(task.updatedAt),
-              completedAt: task.completedAt && toUTCDate(task.completedAt),
-            }))
+            const newTasks = Object.fromEntries(
+              Object.entries(state.tasks).map(([id, task]) => [
+                id,
+                {
+                  ...task,
+                  updatedAt: toUTCDate(task.updatedAt),
+                  completedAt: task.completedAt
+                    ? toUTCDate(task.completedAt)
+                    : undefined,
+                },
+              ]),
+            )
 
+            state.tasks = newTasks
             state.setHydrated(true)
           }
         },

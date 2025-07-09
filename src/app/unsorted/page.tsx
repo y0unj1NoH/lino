@@ -1,6 +1,6 @@
 'use client'
 
-import { useUnsortedTasks } from '@/entities/task/model/selector'
+import { useUnsortedOrPostponeTasks } from '@/entities/task/model/selector'
 import { AddTaskContainer } from '@/features/task/add/ui/add-task-container'
 import { useUnsorted } from '@/features/task/organize/model/context'
 import { cn } from '@/shared/lib/utils'
@@ -9,7 +9,7 @@ import { TaskList } from '@/widgets/unsorted-list/ui/task-list'
 
 export default function UnsortedPage() {
   const { isEditMode } = useUnsorted()
-  const unsortedTasks = useUnsortedTasks()
+  const unsortedTasks = useUnsortedOrPostponeTasks()
 
   return (
     <div

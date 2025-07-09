@@ -11,24 +11,23 @@ import { TaskList } from '@/widgets/unsorted-list/ui/task-list'
 const initializeTaskStoreOnce = once(() => {
   const now = getCurrentDate()
   useTaskStore.setState({
-    tasks: [
-      {
-        id: '1',
-        content: '청소하기',
+    tasks: {
+      '1': {
+        content: 'Test Task',
         status: TaskStatus.Unassigned,
+        completedAt: now,
         isToday: true,
         postponedCount: 0,
         updatedAt: now,
       },
-      {
-        id: '2',
+      '2': {
         content: '공부하기',
         status: TaskStatus.Unassigned,
         isToday: false,
         postponedCount: 0,
         updatedAt: now,
       },
-    ],
+    },
   })
 })
 

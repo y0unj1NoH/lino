@@ -17,17 +17,17 @@ export const TaskCheckItems = ({ status }: TaskCheckItemsProps) => {
 
   return (
     <div className={cn('w-full flex flex-col gap-2', tasks.length && 'pb-4')}>
-      {tasks.map((task) => (
+      {tasks.map(([id, task]) => (
         <CheckboxWithLabel
-          key={task.id}
-          id={task.id}
+          key={id}
+          id={id}
           label={task.content}
           checked={!!task.completedAt}
           onCheckedChange={() => {
             if (task.completedAt) {
-              uncompleteTask(task.id)
+              uncompleteTask(id)
             } else {
-              completeTask(task.id)
+              completeTask(id)
             }
           }}
           strikethrough

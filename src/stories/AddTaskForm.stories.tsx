@@ -6,7 +6,7 @@ import { once } from '@/shared/lib/utils'
 import { Toaster } from '@/shared/ui/sonner'
 
 const initializeTaskStoreOnce = once(() => {
-  useTaskStore.setState({ tasks: [] })
+  useTaskStore.setState({ tasks: {} })
 })
 
 const meta: Meta<typeof AddTaskForm> = {

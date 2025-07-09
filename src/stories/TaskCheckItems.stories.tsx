@@ -15,17 +15,15 @@ const meta: Meta<typeof TaskCheckItems> = {
     (Story) => {
       const now = getCurrentDate()
       useTaskStore.setState({
-        tasks: [
-          {
-            id: '1',
+        tasks: {
+          '1': {
             content: 'Task 1',
             status: TaskStatus.UrgentImportant,
             isToday: true,
             postponedCount: 0,
             updatedAt: now,
           },
-          {
-            id: '2',
+          '2': {
             content: 'Task 2',
             status: TaskStatus.UrgentImportant,
             completedAt: now,
@@ -33,8 +31,7 @@ const meta: Meta<typeof TaskCheckItems> = {
             postponedCount: 0,
             updatedAt: now,
           },
-          {
-            id: '3',
+          '3': {
             content: 'Task 3',
             status: TaskStatus.UrgentImportant,
             completedAt: now,
@@ -42,7 +39,7 @@ const meta: Meta<typeof TaskCheckItems> = {
             postponedCount: 0,
             updatedAt: now,
           },
-        ],
+        },
       })
       return <Story />
     },

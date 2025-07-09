@@ -10,9 +10,8 @@ import { Toaster } from '@/shared/ui/sonner'
 const initializeTaskStoreOnce = once(() => {
   const now = getCurrentDate()
   useTaskStore.setState({
-    tasks: [
-      {
-        id: '1',
+    tasks: {
+      '1': {
         content: 'Test Task',
         status: TaskStatus.Unassigned,
         completedAt: now,
@@ -20,7 +19,7 @@ const initializeTaskStoreOnce = once(() => {
         postponedCount: 0,
         updatedAt: now,
       },
-    ],
+    },
   })
 })
 

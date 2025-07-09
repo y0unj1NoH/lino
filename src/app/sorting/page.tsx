@@ -1,9 +1,16 @@
 'use client'
+import { useRef } from 'react'
 
-import { useUnsortedTasks } from '@/entities/task/model/selector'
+import {
+  getUnsortedTasks,
+  useUnsortedTasks,
+} from '@/entities/task/model/selector'
 import { SortingBoard } from '@/widgets/sorting-board/ui/sorting-board'
 
 export default function SortingPage() {
   const unsortedTasks = useUnsortedTasks()
-  return <SortingBoard tasks={unsortedTasks} />
+  const originalTasks = useRef(getUnsortedTasks())
+  return (
+    <SortingBoard tasks={unsortedTasks} originalTasks={originalTasks.current} />
+  )
 }

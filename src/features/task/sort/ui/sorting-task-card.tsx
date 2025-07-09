@@ -1,5 +1,5 @@
 import { useDraggable } from '@dnd-kit/core'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { TaskCard } from '@/entities/task/ui/task-card'
 import { CARD_DECK_OFFSETS } from '@/features/task/sort/ui/consts'
@@ -26,10 +26,7 @@ export const SortingTaskCard = ({
     })
 
   const [dragStarted, setDragStarted] = useState(false)
-  const [finalTransform, setFinalTransform] = useState<{
-    x: number
-    y: number
-  } | null>(null)
+  const finalTransformRef = useRef<{ x: number; y: number } | null>(null)
 
   useEffect(() => {
     if (!dragStarted && index === 0 && isDragging) {
@@ -39,13 +36,13 @@ export const SortingTaskCard = ({
 
   useEffect(() => {
     if (transform) {
-      setFinalTransform({ x: transform.x, y: transform.y })
+      finalTransformRef.current = { x: transform.x, y: transform.y }
     }
   }, [transform?.x, transform?.y])
 
-  const style = finalTransform
+  const style = finalTransformRef.current
     ? {
-        transform: `translate3d(${finalTransform.x}px, ${finalTransform.y}px, 0) scale(${
+        transform: `translate3d(${finalTransformRef.current.x}px, ${finalTransformRef.current.y}px, 0) scale(${
           dragStarted && !isDragging ? 0 : 1
         })`,
       }
