@@ -204,7 +204,7 @@ export const useTaskStore = create<TaskStore>()(
                     resetTask(task, now),
                   ]),
                 )
-                return { tasks: newTasks }
+                return { sortingStatus: 'UNSORTED', tasks: newTasks }
               },
               false,
               'resetTasks',
