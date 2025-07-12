@@ -1,7 +1,6 @@
 import { X } from 'lucide-react'
 
-import { Button } from '@/shared/ui/base-button'
-import { ButtonGhost } from '@/shared/ui/button'
+import { Button, ButtonGhost } from '@/shared/ui/button'
 
 interface TaskCardProps {
   id: string
